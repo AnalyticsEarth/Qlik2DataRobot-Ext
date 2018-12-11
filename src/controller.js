@@ -13,7 +13,6 @@ export default ['$scope', '$element', function($scope, $element) {
   console.log($scope);
 
   $scope.connectDataRobot = function() {
-    console.log("Click");
 
     var apitoken = $scope.layout.props.apitoken;
     if(apitoken == ""){
@@ -34,7 +33,6 @@ export default ['$scope', '$element', function($scope, $element) {
     console.log($scope.selectallvalue);
     if($scope.selectallvalue){
       //Select All Values
-      console.log($scope.fieldlistsearch);
       $scope.fieldlistsearch.forEach((obj) => {
         if(!(obj.qName in $scope.selectedfields)){
           $scope.selectedfields[obj.qName] = {enabled:true};
@@ -56,14 +54,11 @@ export default ['$scope', '$element', function($scope, $element) {
   });
 
   $scope.searchFields = ((searchvalue) => {
-    console.log(searchvalue);
-    //console.log($scope.fieldlist);
     if(searchvalue == ''){
       $scope.fieldlistsearch = $scope.fieldlist;
     }else{
       $scope.fieldlistsearch = $scope.fieldlist.filter(item => item.qName.toUpperCase().includes(searchvalue.toUpperCase()));
     }
-    console.log($scope.fieldlistsearch);
   });
 
   $scope.countSelected = (() => {
@@ -109,24 +104,16 @@ export default ['$scope', '$element', function($scope, $element) {
         qWidth: 1
       }]
     };
-    console.log("Starting Process");
     $scope.app.createCube(cubedef).then((cube) => {
-      console.log("Got Completed Cube");
-      console.log(cube.layout.qHyperCube);
-
       var error = false;
       if(typeof cube.layout.qHyperCube.qError != 'undefined'){
-        console.log("Error");
         $scope.projecterror = "ERROR";
         $scope.projectstatus = "NOT_CREATED";
         error = true;
       }else{
-        console.log(cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText);
         $scope.projectid = cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText;
       }
       $scope.app.destroySessionObject(cube.layout.qInfo.qId).then((obj) => {
-        console.log("Destroyed");
-        console.log(obj);
         if(error){
           $scope.projectstatus = "NOT_CREATED";
         }else{

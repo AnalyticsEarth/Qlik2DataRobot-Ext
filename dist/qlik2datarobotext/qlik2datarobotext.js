@@ -75,79 +75,14 @@ module.exports = __webpack_require__(1);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _initialProperties = __webpack_require__(2);
-
-var _initialProperties2 = _interopRequireDefault(_initialProperties);
-
-var _template = __webpack_require__(3);
-
-var _template2 = _interopRequireDefault(_template);
-
-var _definition = __webpack_require__(4);
-
-var _definition2 = _interopRequireDefault(_definition);
-
-var _controller = __webpack_require__(5);
-
-var _controller2 = _interopRequireDefault(_controller);
-
-var _paint = __webpack_require__(6);
-
-var _paint2 = _interopRequireDefault(_paint);
-
-var _resize = __webpack_require__(7);
-
-var _resize2 = _interopRequireDefault(_resize);
-
-var _style = __webpack_require__(8);
-
-var _style2 = _interopRequireDefault(_style);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = window.define([], function () {
-  return {
-    initialProperties: _initialProperties2.default,
-    support: {
-      snapshot: false,
-      export: false,
-      exportData: false,
-      viewData: false
-    },
-    template: _template2.default,
-    definition: _definition2.default,
-    controller: _controller2.default,
-    paint: _paint2.default,
-    resize: _resize2.default
-  };
-});
+Object.defineProperty(exports,'__esModule',{value:!0});var _initialProperties=__webpack_require__(2),_initialProperties2=_interopRequireDefault(_initialProperties),_template=__webpack_require__(3),_template2=_interopRequireDefault(_template),_definition=__webpack_require__(4),_definition2=_interopRequireDefault(_definition),_controller=__webpack_require__(5),_controller2=_interopRequireDefault(_controller),_paint=__webpack_require__(6),_paint2=_interopRequireDefault(_paint),_resize=__webpack_require__(7),_resize2=_interopRequireDefault(_resize),_style=__webpack_require__(8),_style2=_interopRequireDefault(_style);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}exports.default=window.define([],function(){return{initialProperties:_initialProperties2.default,support:{snapshot:!1,export:!1,exportData:!1,viewData:!1},template:_template2.default,definition:_definition2.default,controller:_controller2.default,paint:_paint2.default,resize:_resize2.default}});
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  qHyperCubeDef: {
-    qDimensions: [],
-    qMeasures: [],
-    qInitialDataFetch: [{
-      qWidth: 3,
-      qHeight: 1000
-    }]
-  }
-};
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.default={qHyperCubeDef:{qDimensions:[],qMeasures:[],qInitialDataFetch:[{qWidth:3,qHeight:1e3}]}};
 
 /***/ }),
 /* 3 */
@@ -160,261 +95,30 @@ module.exports = "<div class=\"chart-container\">\r\n  <div class=\"disableoverl
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  type: "items",
-  component: "accordion",
-  items: {
-    datarobot: {
-      type: "items",
-      label: "DataRobot",
-      items: {
-        apiendpoint: {
-          type: "string",
-          ref: "props.endpoint",
-          label: "API Endpoint",
-          defaultValue: "https://app.datarobot.com"
-        },
-        webendpoint: {
-          type: "string",
-          ref: "props.webendpoint",
-          label: "Web Endpoint",
-          defaultValue: "https://app.datarobot.com"
-        },
-        apitoken: {
-          type: "string",
-          ref: "props.apitoken",
-          label: "API Token"
-        },
-        ssename: {
-          type: "string",
-          ref: "props.ssename",
-          label: "Analytic Connector",
-          defaultValue: "DataRobot"
-        }
-      }
-    },
-    settings: {
-      uses: "settings"
-    }
-  }
-};
+Object.defineProperty(exports,"__esModule",{value:!0});var about={type:"items",label:"About",items:{about1:{type:"string",component:"text",label:"Steven Pressland, Qlik Solution Architect, 2018"},about1a:{type:"string",component:"text",label:"Version: 1.0.0"},about2:{type:"string",component:"text",label:"GitHub: www.github.com/analyticsearth"},about3:{type:"string",component:"text",label:"Qlik2DataRobot is a client extension to send data directly from your Qlik Sense application to DataRobot."},about4:{type:"string",component:"text",label:"The accompanying Qlik2DataRobot analytic connector is required to be setup and configured on your Qlik Sense environment."},about5:{type:"string",component:"text",label:"See documentation for details."}}};exports.default={type:"items",component:"accordion",items:{datarobot:{type:"items",label:"Qlik 2 DataRobot",items:{apiendpoint:{type:"string",ref:"props.endpoint",label:"API Endpoint",defaultValue:"https://app.datarobot.com"},webendpoint:{type:"string",ref:"props.webendpoint",label:"Web Endpoint",defaultValue:"https://app.datarobot.com"},apitoken:{type:"string",ref:"props.apitoken",label:"API Token"},ssename:{type:"string",ref:"props.ssename",label:"Analytic Connector",defaultValue:"DataRobot"}}},settings:{uses:"settings"},about:about}};
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var qlik = window.require('qlik');
-
-exports.default = ['$scope', '$element', function ($scope, $element) {
-  $scope.app = qlik.currApp(this);
-  $scope.qlik = qlik;
-  $scope.selectedfields = {};
-  $scope.projectname = "";
-  $scope.projectstatus = "NOT_CREATED";
-  $scope.projectid = "";
-  $scope.selectallvalue = false;
-
-  console.log($scope);
-
-  $scope.connectDataRobot = function () {
-    console.log("Click");
-
-    var apitoken = $scope.layout.props.apitoken;
-    if (apitoken == "") {
-      apitoken = $scope.apitoken;
-    }
-    console.log(apitoken);
-
-    if (typeof apitoken != "undefined" && apitoken != "") {
-      $scope.createProject(apitoken);
-    } else {
-      alert("Please enter an API Token in the properties panel to authenticate with DataRobot");
-    }
-  };
-
-  $scope.selectAll = function () {
-    console.log($scope.selectallvalue);
-    if ($scope.selectallvalue) {
-      //Select All Values
-      console.log($scope.fieldlistsearch);
-      $scope.fieldlistsearch.forEach(function (obj) {
-        if (!(obj.qName in $scope.selectedfields)) {
-          $scope.selectedfields[obj.qName] = { enabled: true };
-        } else {
-          $scope.selectedfields[obj.qName].enabled = true;
-        }
-      });
-    } else {
-      //Unselect All Values
-      Object.keys($scope.selectedfields).forEach(function (obj) {
-        $scope.selectedfields[obj].enabled = false;
-      });
-    }
-  };
-
-  $scope.clearSearch = function () {
-    $scope.searchFields('');
-    $scope.searchtext = '';
-  };
-
-  $scope.searchFields = function (searchvalue) {
-    console.log(searchvalue);
-    //console.log($scope.fieldlist);
-    if (searchvalue == '') {
-      $scope.fieldlistsearch = $scope.fieldlist;
-    } else {
-      $scope.fieldlistsearch = $scope.fieldlist.filter(function (item) {
-        return item.qName.toUpperCase().includes(searchvalue.toUpperCase());
-      });
-    }
-    console.log($scope.fieldlistsearch);
-  };
-
-  $scope.countSelected = function () {
-    return $scope.selectedFieldsList().length;
-  };
-
-  $scope.selectedFieldsList = function () {
-    return Object.keys($scope.selectedfields).filter(function (obj) {
-      return $scope.selectedfields[obj].enabled == true;
-    });
-  };
-
-  $scope.createProject = function (apitoken) {
-    $scope.projectstatus = "CREATING";
-
-    var fields = $scope.selectedFieldsList().map(function (f) {
-      return "[" + f + "]";
-    }).join(",");
-    console.log(fields);
-    console.log($scope.projectname);
-
-    var request = {
-      request_type: "createproject",
-      auth_config: {
-        api_token: apitoken,
-        endpoint: $scope.layout.props.endpoint + "/api/v2"
-      },
-      project_name: $scope.projectname,
-      project_name_inc_ts: "true"
-    };
-
-    var qlikcall = $scope.layout.props.ssename + '.ScriptAggrStr(\'' + JSON.stringify(request) + '\',' + fields + ')';
-
-    console.log(qlikcall);
-
-    var cubedef = {
-      qMeasures: [{
-        qDef: {
-          qDef: qlikcall,
-          qAggrFunc: "None"
-        }
-      }],
-      qInitialDataFetch: [{
-        qTop: 0,
-        qLeft: 0,
-        qHeight: 1,
-        qWidth: 1
-      }]
-    };
-    console.log("Starting Process");
-    $scope.app.createCube(cubedef).then(function (cube) {
-      console.log("Got Completed Cube");
-      console.log(cube.layout.qHyperCube);
-
-      var error = false;
-      if (typeof cube.layout.qHyperCube.qError != 'undefined') {
-        console.log("Error");
-        $scope.projecterror = "ERROR";
-        $scope.projectstatus = "NOT_CREATED";
-        error = true;
-      } else {
-        console.log(cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText);
-        $scope.projectid = cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText;
-      }
-      $scope.app.destroySessionObject(cube.layout.qInfo.qId).then(function (obj) {
-        console.log("Destroyed");
-        console.log(obj);
-        if (error) {
-          $scope.projectstatus = "NOT_CREATED";
-        } else {
-          $scope.projectstatus = "CREATED";
-        }
-      });
-    });
-  };
-
-  $scope.restart = function () {
-    $scope.projectname = "";
-    $scope.projectstatus = "NOT_CREATED";
-    $scope.projectid = "";
-  };
-
-  $scope.linkToDataRobot = function () {
-    var link = $scope.layout.props.webendpoint + '/projects/' + $scope.projectid;
-    var win = window.open(link, '_blank');
-    win.focus();
-  };
-}];
+Object.defineProperty(exports,'__esModule',{value:!0});var qlik=window.require('qlik');exports.default=['$scope','$element',function(a){a.app=qlik.currApp(this),a.qlik=qlik,a.selectedfields={},a.projectname='',a.projectstatus='NOT_CREATED',a.projectid='',a.selectallvalue=!1,void 0,a.connectDataRobot=function(){var b=a.layout.props.apitoken;''==b&&(b=a.apitoken),void 0,'undefined'!=typeof b&&''!=b?a.createProject(b):alert('Please enter an API Token in the properties panel to authenticate with DataRobot')},a.selectAll=function(){void 0,a.selectallvalue?a.fieldlistsearch.forEach(function(b){b.qName in a.selectedfields?a.selectedfields[b.qName].enabled=!0:a.selectedfields[b.qName]={enabled:!0}}):Object.keys(a.selectedfields).forEach(function(b){a.selectedfields[b].enabled=!1})},a.clearSearch=function(){a.searchFields(''),a.searchtext=''},a.searchFields=function(b){a.fieldlistsearch=''==b?a.fieldlist:a.fieldlist.filter(function(a){return a.qName.toUpperCase().includes(b.toUpperCase())})},a.countSelected=function(){return a.selectedFieldsList().length},a.selectedFieldsList=function(){return Object.keys(a.selectedfields).filter(function(b){return!0==a.selectedfields[b].enabled})},a.createProject=function(b){a.projectstatus='CREATING';var c=a.selectedFieldsList().map(function(a){return'['+a+']'}).join(',');void 0,void 0;var d={request_type:'createproject',auth_config:{api_token:b,endpoint:a.layout.props.endpoint+'/api/v2'},project_name:a.projectname,project_name_inc_ts:'true'},e=a.layout.props.ssename+'.ScriptAggrStr(\''+JSON.stringify(d)+'\','+c+')';a.app.createCube({qMeasures:[{qDef:{qDef:e,qAggrFunc:'None'}}],qInitialDataFetch:[{qTop:0,qLeft:0,qHeight:1,qWidth:1}]}).then(function(b){var c=!1;'undefined'==typeof b.layout.qHyperCube.qError?a.projectid=b.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText:(a.projecterror='ERROR',a.projectstatus='NOT_CREATED',c=!0),a.app.destroySessionObject(b.layout.qInfo.qId).then(function(){a.projectstatus=c?'NOT_CREATED':'CREATED'})})},a.restart=function(){a.projectname='',a.projectstatus='NOT_CREATED',a.projectid=''},a.linkToDataRobot=function(){var b=a.layout.props.webendpoint+'/projects/'+a.projectid,c=window.open(b,'_blank');c.focus()}}];
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function ($element, layout) {
-  var _this = this;
-
-  //console.log("Paint");
-  var app = this.$scope.app;
-
-  console.log("Paint");
-  console.log(layout);
-  this.$scope.navmode = this.$scope.qlik.navigation.getMode();
-  console.log(this.$scope.navmode);
-
-  app.getList("FieldList").then(function (list) {
-    //console.log(list.layout.qFieldList.qItems);
-    _this.$scope.fieldlist = list.layout.qFieldList.qItems;
-    _this.$scope.fieldlistsearch = _this.$scope.fieldlist;
-  });
-};
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(){var a=this,b=this.$scope.app;//console.log("Paint");
+void 0,void 0,this.$scope.navmode=this.$scope.qlik.navigation.getMode(),void 0,b.getList("FieldList").then(function(b){//console.log(list.layout.qFieldList.qItems);
+a.$scope.fieldlist=b.layout.qFieldList.qItems,a.$scope.fieldlistsearch=a.$scope.fieldlist})};
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function ($element, layout) {
-  var ext = this;
-  var viz = ext.$scope.viz;
-
-  this.$scope.navmode = this.$scope.qlik.navigation.getMode();
-  console.log(this.$scope.navmode);
-};
+Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(){var a=this,b=a.$scope.viz;this.$scope.navmode=this.$scope.qlik.navigation.getMode(),void 0};
 
 /***/ }),
 /* 8 */

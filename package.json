@@ -1,6 +1,6 @@
 {
   "name": "qlik2datarobotext",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "scripts": {
     "build-webpack": "qext-scripts -b",
     "watch-webpack": "qext-scripts -w",
@@ -18,6 +18,7 @@
     "watch-vanilla-deploy-desktop": "qext-scripts -W -D"
   },
   "devDependencies": {
+    "babel-plugin-version-transform": "^1.0.0",
     "babel-preset-minify": "^0.5.0",
     "qext-scripts": "^0.5.0"
   }
