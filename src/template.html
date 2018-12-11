@@ -1,0 +1,115 @@
+<div class="chart-container">
+  <div class="disableoverlay" ng-show="navmode == 'edit'"></div>
+  <div class="leftpanel">
+    <div class="logoimage connected"></div>
+    <div class="sectionblock sectionblockerror" ng-show="projecterror == 'ERROR'">
+      <div class="sectionheader sectionblockerror">Error</div>
+      <div class="sectionbody sectionblockerror">There was an error with your request, please check the settings and try again. If issues continue, check with your administrator.</div>
+    </div>
+    <div class="sectionblock">
+      <div class="sectionheader">Step 1: Select the fields to explore in DataRobot</div>
+      <div class="sectionbody">You have selected {{countSelected()}} fields, include all those you need in DataRobot</div>
+    </div>
+
+    <div class="sectionblock" ng-show="countSelected() > 1">
+      <div class="sectionheader">Step 2: Send the data to DataRobot and create a new project</div>
+      <div ng-show="projectstatus == 'NOT_CREATED'">
+        <div class="sectionbody">
+          <label class="lui-label">Project Name</label>
+          <input class="lui-input  lui-input--large" ng-model="projectname" ng-value="projectname" />
+          <div ng-show="layout.props.apitoken == ''">
+            <label class="lui-label">API Token</label>
+            <input class="lui-input  lui-input--large" ng-model="apitoken" ng-value="apitoken" />
+          </div>
+        </div>
+        <div class="sectionbody">
+          <button class="lui-button lui-button--block lui-button--large lui-button--info" ng-click="connectDataRobot()" ng-disabled="!(projectname.length > 5 && (layout.props.apitoken.length > 1 || apitoken.length > 1))">Create DataRobot Project</button>
+        </div>
+      </div>
+      <div ng-show="projectstatus == 'CREATING'">
+        <div class="sectionbody">
+          <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+          </div>
+          <br />
+          Your data is being securely transfered to DataRobot from the Qlik Associative Engine
+        </div>
+      </div>
+      <div ng-show="projectstatus == 'CREATED'">
+        <div class="sectionbody">
+          The data has been securely transfered to DataRobot
+        </div>
+      </div>
+    </div>
+    <div class="sectionblock" ng-show="projectstatus == 'CREATED'">
+      <div class="sectionheader">Step 3: Explore in DataRobot
+        <div class="right">
+          <button class="lui-button" ng-click="restart()">
+            <span class="lui-button__icon  lui-icon  lui-icon--reload"></span>
+          </button>
+        </div>
+      </div>
+      <div class="sectionbody">
+        <button class="lui-button lui-button--block lui-button--large lui-button--info" ng-click="linkToDataRobot()">Open DataRobot Project</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="rightpanel">
+    <div class="fieldlist">
+      <div class="fieldlistheader">
+        <div class="fieldlisttitle">Field List ({{countSelected()}})</div>
+        <div class="fieldlistsearch">
+
+          <div class="lui-search">
+            <span class="lui-icon  lui-icon--search  lui-search__search-icon"></span>
+            <input class="lui-search__input" maxlength="255" spellcheck="false" type="text" ng-model="searchtext" ng-value="searchtext" ng-change="searchFields(searchtext)" placeholder="Search" />
+            <button class="lui-search__clear-button" ng-click="clearSearch()">
+              <span class="lui-icon  lui-icon--small  lui-icon--close"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span class="lui-list__text titleselectall">
+          <label class="lui-checkbox">
+            <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-change="selectAll()" ng-model="selectallvalue" ng-value="selectallvalue" />
+            <div class="lui-checkbox__check-wrap">
+              <span class="lui-checkbox__check"></span>
+            </div>
+          </label>
+        </span>
+        <div class="titleleft">Field Name</div>
+        <div class="titleright">Unique Values</div>
+      </div>
+      <div class="fieldlistscroll">
+        <ul class="lui-list">
+          <li class="lui-list__item" ng-repeat="f in fieldlistsearch">
+            <span class="lui-list__text">
+              <label class="lui-checkbox">
+                <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-model="selectedfields[f.qName].enabled" ng-value="selectedfields[f.qName].enabled" />
+                <div class="lui-checkbox__check-wrap">
+                  <span class="lui-checkbox__check"></span>
+                  <span class="lui-checkbox__check-text">{{f.qName}}</span>
+                </div>
+                <div class="cardinality">{{f.qCardinal}}</div>
+              </label>
+
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
