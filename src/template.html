@@ -108,7 +108,7 @@
               </span>
             </li>
               <span ng-repeat="f in t.qFields">
-              <li class="lui-list__item" ng-show="f.show && t.enabled">
+              <li class="lui-list__item" ng-show="showField(t,f)">
                 <span class="lui-list__text">
                   <label class="lui-checkbox checkbox">
                     <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-model="tableModel.getFieldList().selections[f.qName].enabled" ng-value="tableModel.getFieldList().selections[f.qName].enabled" ng-change="fieldSelectionChange()" />

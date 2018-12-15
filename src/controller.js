@@ -118,4 +118,8 @@ export default ['$scope', '$element', function($scope, $element) {
     win.focus();
   });
 
+  $scope.showField = ((t,f) =>{
+    return $scope.tableModel.showField(t,f);
+  });
+
 }]

@@ -41,6 +41,7 @@ class QlikDataModel {
     }else{
       let t2 = this.getTablesAssociatedToTable(this.model.qk, tables, [], 1);
       console.log(t2);
+      if(t2.length === 0) t2 = tables;
       this.model.qtr.forEach(item => {
         item.enabled = t2.includes(item.qName);
       });
@@ -82,6 +83,7 @@ class QlikDataModel {
       this.model.qtr.forEach((table) => {
         if(table.enabled){
           table.qFields.forEach(field => {
+            if(this.showField(table,field))
             if(!(field.qName in this.selections)){
               this.selections[field.qName] = {enabled:true};
             }else{
@@ -141,6 +143,16 @@ class QlikDataModel {
     return Object.keys(this.selections).filter((obj) => {
        return (this.selections[obj].enabled === true);
     }).sort();
+  }
+
+  showField(t,f) {
+    if(!this.setup) return;
+    if(t.enabled && f.show){
+      if(f.qTags.includes("$hidden")) return false;
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }
