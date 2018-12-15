@@ -58,6 +58,25 @@
 
 }
 
+.qv-object-qlik2datarobotext .listheader{
+  padding:10px;
+}
+
+.qv-object-qlik2datarobotext .checkbox{
+  float: left;
+}
+
+.qv-object-qlik2datarobotext .checktext{
+  float: left;
+  padding-top:3px;
+}
+
+.qv-object-qlik2datarobotext .disabledtext{
+  text-align: center;
+  padding-top:3px;
+  font-style: italic;
+}
+
 .qv-object-qlik2datarobotext .cardinality{
   float: right;
   font-style: italic;

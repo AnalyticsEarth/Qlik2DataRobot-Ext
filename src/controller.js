@@ -1,14 +1,17 @@
+import QlikDataModel from './QlikDataModel'
+
 var qlik = window.require('qlik');
 
 
 export default ['$scope', '$element', function($scope, $element) {
   $scope.app = qlik.currApp(this);
   $scope.qlik = qlik;
-  $scope.selectedfields = {};
   $scope.projectname = "";
   $scope.projectstatus = "NOT_CREATED";
   $scope.projectid = "";
-  $scope.selectallvalue = false;
+
+
+  $scope.tableModel = new QlikDataModel();
 
   console.log($scope);
 
@@ -30,49 +33,29 @@ export default ['$scope', '$element', function($scope, $element) {
   }
 
   $scope.selectAll = (() => {
-    console.log($scope.selectallvalue);
-    if($scope.selectallvalue){
-      //Select All Values
-      $scope.fieldlistsearch.forEach((obj) => {
-        if(!(obj.qName in $scope.selectedfields)){
-          $scope.selectedfields[obj.qName] = {enabled:true};
-        }else{
-          $scope.selectedfields[obj.qName].enabled = true;
-        }
-      });
-    }else{
-      //Unselect All Values
-      Object.keys($scope.selectedfields).forEach((obj) => {
-          $scope.selectedfields[obj].enabled = false;
-      });
-    }
+    return $scope.tableModel.selectAll($scope.selectallvalue);
   });
 
   $scope.clearSearch = (() => {
-    $scope.searchFields('');
     $scope.searchtext = '';
+    return $scope.tableModel.clearSearch();
   });
 
   $scope.searchFields = ((searchvalue) => {
-    if(searchvalue == ''){
-      $scope.fieldlistsearch = $scope.fieldlist;
-    }else{
-      $scope.fieldlistsearch = $scope.fieldlist.filter(item => item.qName.toUpperCase().includes(searchvalue.toUpperCase()));
-    }
+    return $scope.tableModel.searchFields(searchvalue);
   });
 
   $scope.countSelected = (() => {
-    return $scope.selectedFieldsList().length;
+    return $scope.tableModel.countSelected();
   });
 
-  $scope.selectedFieldsList = (() => {
-    return Object.keys($scope.selectedfields).filter((obj) => $scope.selectedfields[obj].enabled == true);
+  $scope.fieldSelectionChange = (() => {
+    $scope.tableModel.tablesEnabledForSelectedFields();
   });
 
   $scope.createProject = ((apitoken) => {
     $scope.projectstatus = "CREATING";
-
-    var fields = $scope.selectedFieldsList().map(f => "[" + f + "]").join(",");
+    var fields = $scope.tableModel.selectedFields().map(f => "[" + f + "]").join(",");
     console.log(fields);
     console.log($scope.projectname);
 
@@ -82,8 +65,7 @@ export default ['$scope', '$element', function($scope, $element) {
         api_token: apitoken,
         endpoint: $scope.layout.props.endpoint+"/api/v2"
       },
-      project_name: $scope.projectname,
-      project_name_inc_ts: "true",
+      project_name: $scope.projectname
     };
 
     var qlikcall = `${$scope.layout.props.ssename}.ScriptAggrStr('${JSON.stringify(request)}',${fields})`;

@@ -84,7 +84,7 @@
       <div>
         <span class="lui-list__text titleselectall">
           <label class="lui-checkbox">
-            <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-change="selectAll()" ng-model="selectallvalue" ng-value="selectallvalue" />
+            <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-change="selectAll()" ng-model="selectallvalue" ng-value="selectallvalue" ng-disabled="countSelected() === 0" />
             <div class="lui-checkbox__check-wrap">
               <span class="lui-checkbox__check"></span>
             </div>
@@ -95,20 +95,36 @@
       </div>
       <div class="fieldlistscroll">
         <ul class="lui-list">
-          <li class="lui-list__item" ng-repeat="f in fieldlistsearch">
+          <span ng-repeat="t in tableModel.getFieldList().tables">
+          <li class="lui-list__header listheader">
             <span class="lui-list__text">
-              <label class="lui-checkbox">
-                <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-model="selectedfields[f.qName].enabled" ng-value="selectedfields[f.qName].enabled" />
-                <div class="lui-checkbox__check-wrap">
-                  <span class="lui-checkbox__check"></span>
-                  <span class="lui-checkbox__check-text">{{f.qName}}</span>
-                </div>
-                <div class="cardinality">{{f.qCardinal}}</div>
-              </label>
-
+                  <span class="lui-checkbox__check-text">{{t.qName}}</span>
+                <div class="cardinality">Rows: {{t.qNoOfRows}}</div>
             </span>
-          </li>
-        </ul>
+            </li>
+            <li class="lui-list__item lui-disabled" ng-show="!t.enabled">
+              <span class="lui-list__text">
+                  <span class="lui-checkbox__check-text disabledtext">This table is not assocated to a field already selected</span>
+              </span>
+            </li>
+              <span ng-repeat="f in t.qFields">
+              <li class="lui-list__item" ng-show="f.show && t.enabled">
+                <span class="lui-list__text">
+                  <label class="lui-checkbox checkbox">
+                    <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-model="tableModel.getFieldList().selections[f.qName].enabled" ng-value="tableModel.getFieldList().selections[f.qName].enabled" ng-change="fieldSelectionChange()" />
+                    <div class="lui-checkbox__check-wrap">
+                      <span class="lui-checkbox__check"></span>
+
+                    </div>
+                    </label>
+                    <span class="lui-checkbox__check-text checktext">{{f.qName}}</span>
+                    <div class="cardinality">{{f.qnPresentDistinctValues}}</div>
+
+                </span>
+              </li>
+              </span>
+              </span>
+            </ul>
       </div>
     </div>
   </div>

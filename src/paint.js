@@ -6,11 +6,12 @@ export default function($element, layout) {
   console.log(layout);
   this.$scope.navmode = this.$scope.qlik.navigation.getMode();
   console.log(this.$scope.navmode);
+  console.log(this.$scope);
 
-  app.getList("FieldList").then((list) => {
-    //console.log(list.layout.qFieldList.qItems);
-    this.$scope.fieldlist = list.layout.qFieldList.qItems;
-    this.$scope.fieldlistsearch = this.$scope.fieldlist;
-  })
+  this.$scope.app.model.engineApp.getTablesAndKeys({qcx:1000,qcy:1000},{qcx:1000,qcy:1000},20,true,false).then(res => {
+    console.log(res);
+    //this.$scope.keymodel = res;
+    this.$scope.tableModel.setModel(res);
+  });
 
 }

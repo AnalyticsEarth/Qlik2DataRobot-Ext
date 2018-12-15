@@ -3,10 +3,10 @@
     ["version-transform"]
   ],
   "presets": [
-    "env",
+    "env" ,
     ["minify",{
-      "removeConsole":{
-        "exclude": [ "error", "warn", "info"]
+		"removeConsole":{
+        "exclude": ["error", "warn", "info" ]
       },
       "removeDebugger":true
       }]
