@@ -59,7 +59,7 @@ class QlikDataModel {
     let t2a = [ ...new Set([].concat.apply([], t2))];
     let t3 = t2a.filter(table => !tables.includes(table));
     let t3a = t3.filter(table => !ignore.includes(table));
-    if(t3a.length > 0 || level > 5){
+    if(t3a.length > 0){
       let ignore2 = ignore.concat(t3a);
       let t4 = this.getTablesAssociatedToTable(array,t3, ignore2, level + 1);
       return t4;
