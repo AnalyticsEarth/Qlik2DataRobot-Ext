@@ -91,24 +91,24 @@
           </label>
         </span>
         <div class="titleleft">Field Name</div>
-        <div class="titleright">Unique Values</div>
+        <div class="titleright">More Information</div>
       </div>
       <div class="fieldlistscroll">
         <ul class="lui-list">
           <span ng-repeat="t in tableModel.getFieldList().tables">
-          <li class="lui-list__header listheader">
-            <span class="lui-list__text">
-                  <span class="lui-checkbox__check-text">{{t.qName}}</span>
+            <li class="lui-list__header listheader">
+              <span class="lui-list__text">
+                <span class="lui-checkbox__check-text">{{t.qName}}</span>
                 <div class="cardinality">Rows: {{t.qNoOfRows}}</div>
-            </span>
+              </span>
             </li>
             <li class="lui-list__item lui-disabled" ng-show="!t.enabled">
               <span class="lui-list__text">
-                  <span class="lui-checkbox__check-text disabledtext">This table is not assocated to a field already selected</span>
+                <span class="lui-checkbox__check-text disabledtext">This table is not assocated to a field already selected</span>
               </span>
             </li>
-              <span ng-repeat="f in t.qFields">
-              <li class="lui-list__item" ng-show="showField(t,f)">
+            <span ng-repeat="f in t.qFields">
+              <li class="lui-list__item" ng-show="showField(t,f)" ng-click="selectFieldInfo(t,f)">
                 <span class="lui-list__text">
                   <label class="lui-checkbox checkbox">
                     <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-model="tableModel.getFieldList().selections[f.qName].enabled" ng-value="tableModel.getFieldList().selections[f.qName].enabled" ng-change="fieldSelectionChange()" />
@@ -116,15 +116,71 @@
                       <span class="lui-checkbox__check"></span>
 
                     </div>
-                    </label>
-                    <span class="lui-checkbox__check-text checktext">{{f.qName}}</span>
-                    <div class="cardinality">{{f.qnPresentDistinctValues}}</div>
+                  </label>
+                  <span class="lui-checkbox__check-text checktext">{{f.qName}}</span>
+                  <div class="cardinality">
+                    <span class="lui-icon lui-icon--warning-triangle warning" ng-if="f.qnPresentDistinctValues === f.qnNonNulls"></span>
+                    <span class="lui-icon lui-icon--more"></span>
+                  </div>
 
                 </span>
               </li>
-              </span>
-              </span>
-            </ul>
+              <li class="lui-list__item" ng-show="showField(t,f) && showFieldInfo(t,f)">
+                <div class="fieldinfo">
+                  <ul class="lui-tabset lui-tabset--fill" style="border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
+                    <li class="lui-tab" ng-class="classForSelectedTab('DM')" ng-click="selectTab('DM',f)">
+                      <span class="lui-tab__text">Data Model</span>
+                    </li>
+                    <li class="lui-tab" ng-class="classForSelectedTab('D')" ng-click="selectTab('D',f)">
+                      <span class="lui-tab__text">Distribution</span>
+                    </li>
+                    <li ng-show="false" class="lui-tab" ng-class="classForSelectedTab('S')" ng-click="selectTab('S',f)">
+                      <span class="lui-tab__text">Statistics</span>
+                    </li>
+                  </ul>
+                  <div class="fieldinfotab" ng-if="infoSelectedTab === 'DM'">
+                    <div class="iconbar">
+                      <div class="icon" ng-show="f.qTags.includes('$key')"><span class="lui-icon lui-icon--key"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$geoname')"><span class="lui-icon lui-icon--map"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$text')"><span class="lui-icon lui-icon--text"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$numeric')"><span class="lui-icon lui-icon--kpi"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$date')"><span class="lui-icon lui-icon--calendar"></span></div>
+                    </div>
+                    <div class="infolist">
+                      <div class="infolistitem">Information Density:<div class="infolistitemvalue">{{Math.floor(f.qInformationDensity*100) + "%"}}</div>
+                      </div>
+                      <div class="infolistitem">Subset Ratio:<div class="infolistitemvalue">{{Math.floor(f.qSubsetRatio*100)}}%</div>
+                      </div>
+                      <div class="infolistitem">Non Nulls:<div class="infolistitemvalue">{{f.qnNonNulls}}</div>
+                      </div>
+                      <div class="infolistitem">Present Distinct Values:<div class="infolistitemvalue">{{f.qnPresentDistinctValues}}</div>
+                      </div>
+                      <div class="infolistitem">Total Distinct Values:<div class="infolistitemvalue">{{f.qnTotalDistinctValues}}</div>
+                      </div>
+                      <div class="infolistitem">Rows:<div class="infolistitemvalue">{{f.qnRows}}</div>
+                      </div>
+                    </div>
+                    <div class="footnote">
+                      <ul>
+                        <span ng-repeat="m in f.warningMessages">
+                        <li class="warning">{{m}}</li>
+                        </span>
+                        <li ng-show="f.qTags.includes('$key')">This field is a key, values will originate from all the tables that share this key.</li>
+                        <li ng-show="true">Information relates to the data model, selections are not reflected in these statistics.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="fieldinfotab fieldinfotabchart" ng-if="infoSelectedTab === 'D'">
+                    <div class="fieldinfodistheader">
+                      {{currentChartInfo}}
+                    </div>
+                    <div class="chart" id="{{'distviz' + f.uid}}"></div>
+                  </div>
+                </div>
+              </li>
+            </span>
+          </span>
+        </ul>
       </div>
     </div>
   </div>

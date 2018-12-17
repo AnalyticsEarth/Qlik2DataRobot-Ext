@@ -9,6 +9,7 @@ class QlikDataModel {
     this.model = tablesAndKeys;
     this.setup = true;
     this.setTablesEnabled();
+    this.setTablesAndFieldsId();
     this.selections = {};
     this.resetSearch();
 
@@ -18,6 +19,25 @@ class QlikDataModel {
   {
     if(!this.setup) return;
     this.model.qtr.forEach((val) => val.enabled = true)
+  }
+
+  setTablesAndFieldsId()
+  {
+    let idcounter = 0;
+    if(!this.setup) return;
+    this.model.qtr.forEach((table) => {
+      table.qFields.forEach((field) => {
+        field.uid = idcounter;
+        idcounter++;
+
+        field.warningMessages = [];
+        if(field.qnPresentDistinctValues === field.qnNonNulls){
+          field.warning = true;
+          field.warningMessages.push("This field has a lot of unique values, it is not likely to be useful for predictive analysis.")
+        }
+
+      })
+    })
   }
 
   getFieldList()
@@ -59,7 +79,7 @@ class QlikDataModel {
     let t2a = [ ...new Set([].concat.apply([], t2))];
     let t3 = t2a.filter(table => !tables.includes(table));
     let t3a = t3.filter(table => !ignore.includes(table));
-    if(t3a.length > 0 || level > 5){
+    if(t3a.length > 0){
       let ignore2 = ignore.concat(t3a);
       let t4 = this.getTablesAssociatedToTable(array,t3, ignore2, level + 1);
       return t4;

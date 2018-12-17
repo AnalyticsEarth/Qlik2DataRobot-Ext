@@ -9,6 +9,12 @@ export default ['$scope', '$element', function($scope, $element) {
   $scope.projectname = "";
   $scope.projectstatus = "NOT_CREATED";
   $scope.projectid = "";
+  $scope.infoSelectedTable = "";
+  $scope.infoSelectedField = "";
+  $scope.infoSelectedTab = "DM";
+  $scope.Math = Math;
+  $scope.currentChartInfo = "";
+  $scope.infoCurrentVis;
 
 
   $scope.tableModel = new QlikDataModel();
@@ -120,6 +126,119 @@ export default ['$scope', '$element', function($scope, $element) {
 
   $scope.showField = ((t,f) =>{
     return $scope.tableModel.showField(t,f);
+  });
+
+  $scope.showFieldInfo = ((t,f) =>{
+    return (t.qName === $scope.infoSelectedTable && f.qName === $scope.infoSelectedField)
+  });
+
+  $scope.selectFieldInfo = ((t,f) =>{
+    if(t.qName === $scope.infoSelectedTable && f.qName === $scope.infoSelectedField){
+      $scope.infoSelectedTable = "";
+      $scope.infoSelectedField = "";
+    }else{
+      $scope.infoSelectedTable = t.qName;
+      $scope.infoSelectedField = f.qName;
+    }
+    $scope.selectTab($scope.infoSelectedTab, f);
+  });
+
+  $scope.selectTab = ((tab, field) => {
+    //console.log(tab);
+    $scope.infoSelectedTab = tab;
+    if(tab === "D"){
+      $scope.createVisualization(field, 'distviz'+field.uid);
+    }
+  });
+
+  $scope.classForSelectedTab = ((tab) => {
+    //console.log(tab);
+    if($scope.infoSelectedTab === tab) return "lui-active";
+  });
+
+  $scope.createVisualization = ((field, domid) => {
+    console.log("Create Visualization");
+
+    let charttype = 'barchart';
+    let fieldname = field.qName;
+    let columns = [];
+
+    //Pick the chart type
+    if(field.qTags.includes('$text')){
+      charttype = 'barchart';
+      $scope.currentChartInfo = "Categorical Field: Frequency Distribution";
+    }
+    if(field.qTags.includes('$numeric')){
+      charttype = 'histogram';
+      $scope.currentChartInfo = "Numeric Field: Histogram Distribution";
+    }
+
+    //Set the columns for the chosen chart type
+    if(charttype === "barchart"){
+      if(field.qnPresentDistinctValues === field.qnNonNulls){
+        //Unique value per row
+        charttype = 'kpi';
+        columns.push({qDef:{
+          qLabel:"Count of " + fieldname,
+          qDef:"=Count(["+ fieldname +"])"
+        }});
+        $scope.currentChartInfo = " All Unique Values - This field is not likely to be useful for predictive analysis";
+      }else{
+        columns.push({qDef:{
+          qFieldLabels:[fieldname],
+          qFieldDefs:["[" + fieldname + "]"]
+        }});
+        columns.push({qDef:{
+          qLabel:"Count of " + fieldname,
+          qDef:"=Count(["+ fieldname +"])"
+        }});
+      }
+
+
+    }
+
+    if(charttype === "histogram"){
+      columns.push({qDef:{
+        qFieldLabels:[fieldname],
+        qFieldDefs:["[" + fieldname + "]"]
+      }});
+    }
+
+    console.log(charttype);
+    console.log(columns);
+
+    $scope.app.visualization.create(
+  charttype,
+  columns,
+  {
+
+    showTitles: false,
+    gridLine:{
+      auto:false,
+      spacing:0
+    },
+    legend:{
+      show:false
+    },
+    dimensionAxis:{
+      show:"labels",
+      continuousAuto:true
+    },
+    measureAxis:{
+      show:"labels"
+    },
+    preferContinuousAxis:true,
+    showMiniChartForContinuousAxis:false
+  }
+).then(function(vis){
+  console.log("Show Visualization");
+  if(typeof $scope.infoCurrentVis != 'undefined'){
+    console.log("Remove Vis");
+    $scope.infoCurrentVis.close();
+  }
+  $scope.infoCurrentVis = vis;
+  vis.show(domid);
+});
   });
 
 }]
