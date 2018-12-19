@@ -33,7 +33,12 @@ class QlikDataModel {
         field.warningMessages = [];
         if(field.qnPresentDistinctValues === field.qnNonNulls){
           field.warning = true;
-          field.warningMessages.push("This field has a lot of unique values, it is not likely to be useful for predictive analysis.")
+          field.warningMessages.push("This field has a lot of unique values, it is not likely to be useful for predictive analysis unless you include a field from another associated table with more rows.")
+        }
+
+        if(field.qTags.includes('$key')){
+          field.warning = true;
+          field.warningMessages.push("This field is a key, in most situations this field is not useful for predictive analytics.")
         }
 
       })

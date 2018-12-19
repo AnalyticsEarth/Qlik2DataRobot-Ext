@@ -75,60 +75,707 @@ module.exports = __webpack_require__(1);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,'__esModule',{value:!0});var _initialProperties=__webpack_require__(2),_initialProperties2=_interopRequireDefault(_initialProperties),_template=__webpack_require__(3),_template2=_interopRequireDefault(_template),_definition=__webpack_require__(4),_definition2=_interopRequireDefault(_definition),_controller=__webpack_require__(5),_controller2=_interopRequireDefault(_controller),_paint=__webpack_require__(7),_paint2=_interopRequireDefault(_paint),_resize=__webpack_require__(8),_resize2=_interopRequireDefault(_resize),_style=__webpack_require__(9),_style2=_interopRequireDefault(_style);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}exports.default=window.define([],function(){return{initialProperties:_initialProperties2.default,support:{snapshot:!1,export:!1,exportData:!1,viewData:!1},template:_template2.default,definition:_definition2.default,controller:_controller2.default,paint:_paint2.default,resize:_resize2.default}});
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _initialProperties = __webpack_require__(2);
+
+var _initialProperties2 = _interopRequireDefault(_initialProperties);
+
+var _template = __webpack_require__(3);
+
+var _template2 = _interopRequireDefault(_template);
+
+var _definition = __webpack_require__(4);
+
+var _definition2 = _interopRequireDefault(_definition);
+
+var _controller = __webpack_require__(5);
+
+var _controller2 = _interopRequireDefault(_controller);
+
+var _paint = __webpack_require__(7);
+
+var _paint2 = _interopRequireDefault(_paint);
+
+var _resize = __webpack_require__(8);
+
+var _resize2 = _interopRequireDefault(_resize);
+
+var _style = __webpack_require__(9);
+
+var _style2 = _interopRequireDefault(_style);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = window.define([], function () {
+  return {
+    initialProperties: _initialProperties2.default,
+    support: {
+      snapshot: false,
+      export: false,
+      exportData: false,
+      viewData: false
+    },
+    template: _template2.default,
+    definition: _definition2.default,
+    controller: _controller2.default,
+    paint: _paint2.default,
+    resize: _resize2.default
+  };
+});
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,"__esModule",{value:!0}),exports.default={qHyperCubeDef:{qDimensions:[],qMeasures:[],qInitialDataFetch:[{qWidth:3,qHeight:1e3}]}};
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  qHyperCubeDef: {
+    qDimensions: [],
+    qMeasures: [],
+    qInitialDataFetch: [{
+      qWidth: 3,
+      qHeight: 1000
+    }]
+  }
+};
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"chart-container\">\r\n  <div class=\"disableoverlay\" ng-show=\"navmode == 'edit'\"></div>\r\n  <div class=\"leftpanel\">\r\n    <div class=\"logoimage connected\"></div>\r\n    <div class=\"sectionblock sectionblockerror\" ng-show=\"projecterror == 'ERROR'\">\r\n      <div class=\"sectionheader sectionblockerror\">Error</div>\r\n      <div class=\"sectionbody sectionblockerror\">There was an error with your request, please check the settings and try again. If issues continue, check with your administrator.</div>\r\n    </div>\r\n    <div class=\"sectionblock\">\r\n      <div class=\"sectionheader\">Step 1: Select the fields to explore in DataRobot</div>\r\n      <div class=\"sectionbody\">You have selected {{countSelected()}} fields, include all those you need in DataRobot</div>\r\n    </div>\r\n\r\n    <div class=\"sectionblock\" ng-show=\"countSelected() > 1\">\r\n      <div class=\"sectionheader\">Step 2: Send the data to DataRobot and create a new project</div>\r\n      <div ng-show=\"projectstatus == 'NOT_CREATED'\">\r\n        <div class=\"sectionbody\">\r\n          <label class=\"lui-label\">Project Name</label>\r\n          <input class=\"lui-input  lui-input--large\" ng-model=\"projectname\" ng-value=\"projectname\" />\r\n          <div ng-show=\"layout.props.apitoken == ''\">\r\n            <label class=\"lui-label\">API Token</label>\r\n            <input class=\"lui-input  lui-input--large\" ng-model=\"apitoken\" ng-value=\"apitoken\" />\r\n          </div>\r\n        </div>\r\n        <div class=\"sectionbody\">\r\n          <button class=\"lui-button lui-button--block lui-button--large lui-button--info\" ng-click=\"connectDataRobot()\" ng-disabled=\"!(projectname.length > 5 && (layout.props.apitoken.length > 1 || apitoken.length > 1))\">Create DataRobot Project</button>\r\n        </div>\r\n      </div>\r\n      <div ng-show=\"projectstatus == 'CREATING'\">\r\n        <div class=\"sectionbody\">\r\n          <div class=\"sk-circle\">\r\n            <div class=\"sk-circle1 sk-child\"></div>\r\n            <div class=\"sk-circle2 sk-child\"></div>\r\n            <div class=\"sk-circle3 sk-child\"></div>\r\n            <div class=\"sk-circle4 sk-child\"></div>\r\n            <div class=\"sk-circle5 sk-child\"></div>\r\n            <div class=\"sk-circle6 sk-child\"></div>\r\n            <div class=\"sk-circle7 sk-child\"></div>\r\n            <div class=\"sk-circle8 sk-child\"></div>\r\n            <div class=\"sk-circle9 sk-child\"></div>\r\n            <div class=\"sk-circle10 sk-child\"></div>\r\n            <div class=\"sk-circle11 sk-child\"></div>\r\n            <div class=\"sk-circle12 sk-child\"></div>\r\n          </div>\r\n          <br />\r\n          Your data is being securely transfered to DataRobot from the Qlik Associative Engine\r\n        </div>\r\n      </div>\r\n      <div ng-show=\"projectstatus == 'CREATED'\">\r\n        <div class=\"sectionbody\">\r\n          The data has been securely transfered to DataRobot\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"sectionblock\" ng-show=\"projectstatus == 'CREATED'\">\r\n      <div class=\"sectionheader\">Step 3: Explore in DataRobot\r\n        <div class=\"right\">\r\n          <button class=\"lui-button\" ng-click=\"restart()\">\r\n            <span class=\"lui-button__icon  lui-icon  lui-icon--reload\"></span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"sectionbody\">\r\n        <button class=\"lui-button lui-button--block lui-button--large lui-button--info\" ng-click=\"linkToDataRobot()\">Open DataRobot Project</button>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"rightpanel\">\r\n    <div class=\"fieldlist\">\r\n      <div class=\"fieldlistheader\">\r\n        <div class=\"fieldlisttitle\">Field List ({{countSelected()}})</div>\r\n        <div class=\"fieldlistsearch\">\r\n\r\n          <div class=\"lui-search\">\r\n            <span class=\"lui-icon  lui-icon--search  lui-search__search-icon\"></span>\r\n            <input class=\"lui-search__input\" maxlength=\"255\" spellcheck=\"false\" type=\"text\" ng-model=\"searchtext\" ng-value=\"searchtext\" ng-change=\"searchFields(searchtext)\" placeholder=\"Search\" />\r\n            <button class=\"lui-search__clear-button\" ng-click=\"clearSearch()\">\r\n              <span class=\"lui-icon  lui-icon--small  lui-icon--close\"></span>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div>\r\n        <span class=\"lui-list__text titleselectall\">\r\n          <label class=\"lui-checkbox\">\r\n            <input class=\"lui-checkbox__input\" type=\"checkbox\" aria-label=\"Label\" ng-change=\"selectAll()\" ng-model=\"selectallvalue\" ng-value=\"selectallvalue\" ng-disabled=\"countSelected() === 0\" />\r\n            <div class=\"lui-checkbox__check-wrap\">\r\n              <span class=\"lui-checkbox__check\"></span>\r\n            </div>\r\n          </label>\r\n        </span>\r\n        <div class=\"titleleft\">Field Name</div>\r\n        <div class=\"titleright\">More Information</div>\r\n      </div>\r\n      <div class=\"fieldlistscroll\">\r\n        <ul class=\"lui-list\">\r\n          <span ng-repeat=\"t in tableModel.getFieldList().tables\">\r\n            <li class=\"lui-list__header listheader\">\r\n              <span class=\"lui-list__text\">\r\n                <span class=\"lui-checkbox__check-text\">{{t.qName}}</span>\r\n                <div class=\"cardinality\">Rows: {{t.qNoOfRows}}</div>\r\n              </span>\r\n            </li>\r\n            <li class=\"lui-list__item lui-disabled\" ng-show=\"!t.enabled\">\r\n              <span class=\"lui-list__text\">\r\n                <span class=\"lui-checkbox__check-text disabledtext\">This table is not assocated to a field already selected</span>\r\n              </span>\r\n            </li>\r\n            <span ng-repeat=\"f in t.qFields\">\r\n              <li class=\"lui-list__item\" ng-show=\"showField(t,f)\" ng-click=\"selectFieldInfo(t,f)\">\r\n                <span class=\"lui-list__text\">\r\n                  <label class=\"lui-checkbox checkbox\">\r\n                    <input class=\"lui-checkbox__input\" type=\"checkbox\" aria-label=\"Label\" ng-model=\"tableModel.getFieldList().selections[f.qName].enabled\" ng-value=\"tableModel.getFieldList().selections[f.qName].enabled\" ng-change=\"fieldSelectionChange()\" />\r\n                    <div class=\"lui-checkbox__check-wrap\">\r\n                      <span class=\"lui-checkbox__check\"></span>\r\n\r\n                    </div>\r\n                  </label>\r\n                  <span class=\"lui-checkbox__check-text checktext\">{{f.qName}}</span>\r\n                  <div class=\"cardinality\">\r\n                    <span class=\"lui-icon lui-icon--warning-triangle warning\" ng-if=\"f.qnPresentDistinctValues === f.qnNonNulls\"></span>\r\n                    <span class=\"lui-icon lui-icon--more\"></span>\r\n                  </div>\r\n\r\n                </span>\r\n              </li>\r\n              <li class=\"lui-list__item\" ng-show=\"showField(t,f) && showFieldInfo(t,f)\">\r\n                <div class=\"fieldinfo\">\r\n                  <ul class=\"lui-tabset lui-tabset--fill\" style=\"border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(0, 0, 0, 0.1);\">\r\n                    <li class=\"lui-tab\" ng-class=\"classForSelectedTab('DM')\" ng-click=\"selectTab('DM',f)\">\r\n                      <span class=\"lui-tab__text\">Data Model</span>\r\n                    </li>\r\n                    <li class=\"lui-tab\" ng-class=\"classForSelectedTab('D')\" ng-click=\"selectTab('D',f)\">\r\n                      <span class=\"lui-tab__text\">Distribution</span>\r\n                    </li>\r\n                    <li ng-show=\"false\" class=\"lui-tab\" ng-class=\"classForSelectedTab('S')\" ng-click=\"selectTab('S',f)\">\r\n                      <span class=\"lui-tab__text\">Statistics</span>\r\n                    </li>\r\n                  </ul>\r\n                  <div class=\"fieldinfotab\" ng-if=\"infoSelectedTab === 'DM'\">\r\n                    <div class=\"iconbar\">\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$key')\"><span class=\"lui-icon lui-icon--key\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$geoname')\"><span class=\"lui-icon lui-icon--map\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$text')\"><span class=\"lui-icon lui-icon--text\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$numeric')\"><span class=\"lui-icon lui-icon--kpi\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$date')\"><span class=\"lui-icon lui-icon--calendar\"></span></div>\r\n                    </div>\r\n                    <div class=\"infolist\">\r\n                      <div class=\"infolistitem\">Information Density:<div class=\"infolistitemvalue\">{{Math.floor(f.qInformationDensity*100) + \"%\"}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Subset Ratio:<div class=\"infolistitemvalue\">{{Math.floor(f.qSubsetRatio*100)}}%</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Non Nulls:<div class=\"infolistitemvalue\">{{f.qnNonNulls}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Present Distinct Values:<div class=\"infolistitemvalue\">{{f.qnPresentDistinctValues}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Total Distinct Values:<div class=\"infolistitemvalue\">{{f.qnTotalDistinctValues}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Rows:<div class=\"infolistitemvalue\">{{f.qnRows}}</div>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"footnote\">\r\n                      <ul>\r\n                        <span ng-repeat=\"m in f.warningMessages\">\r\n                        <li class=\"warning\">{{m}}</li>\r\n                        </span>\r\n                        <li ng-show=\"f.qTags.includes('$key')\">This field is a key, values will originate from all the tables that share this key.</li>\r\n                        <li ng-show=\"true\">Information relates to the data model, selections are not reflected in these statistics.</li>\r\n                      </ul>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"fieldinfotab fieldinfotabchart\" ng-if=\"infoSelectedTab === 'D'\">\r\n                    <div class=\"fieldinfodistheader\">\r\n                      {{currentChartInfo}}\r\n                    </div>\r\n                    <div class=\"chart\" id=\"{{'distviz' + f.uid}}\"></div>\r\n                  </div>\r\n                </div>\r\n              </li>\r\n            </span>\r\n          </span>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n";
+module.exports = "<div class=\"chart-container\">\r\n  <div class=\"disableoverlay\" ng-show=\"navmode == 'edit'\"></div>\r\n  <div class=\"leftpanel\">\r\n    <div class=\"logoimage connected\"></div>\r\n    <div class=\"sectionblock sectionblockerror\" ng-show=\"projecterror == 'ERROR'\">\r\n      <div class=\"sectionheader sectionblockerror\">Error</div>\r\n      <div class=\"sectionbody sectionblockerror\">There was an error with your request, please check the settings and try again. If issues continue, check with your administrator.</div>\r\n    </div>\r\n    <div class=\"sectionblock\">\r\n      <div class=\"sectionheader\">Step 1: Select the fields to explore in DataRobot</div>\r\n      <div class=\"sectionbody\">You have selected {{countSelected()}} fields, include all those you need in DataRobot</div>\r\n    </div>\r\n\r\n    <div class=\"sectionblock\" ng-show=\"countSelected() > 1\">\r\n      <div class=\"sectionheader\">Step 2: Send the data to DataRobot and create a new project</div>\r\n      <div ng-show=\"projectstatus == 'NOT_CREATED'\">\r\n        <div class=\"sectionbody\">\r\n          <label class=\"lui-label\">Project Name</label>\r\n          <input class=\"lui-input  lui-input--large\" ng-model=\"projectname\" ng-value=\"projectname\" />\r\n          <div ng-show=\"layout.props.apitoken == ''\">\r\n            <label class=\"lui-label\">API Token</label>\r\n            <input class=\"lui-input  lui-input--large\" ng-model=\"apitoken\" ng-value=\"apitoken\" />\r\n          </div>\r\n        </div>\r\n        <div class=\"sectionbody\">\r\n          <button class=\"lui-button lui-button--block lui-button--large lui-button--info\" ng-click=\"connectDataRobot()\" ng-disabled=\"!(projectname.length > 5 && (layout.props.apitoken.length > 1 || apitoken.length > 1))\">Create DataRobot Project</button>\r\n        </div>\r\n      </div>\r\n      <div ng-show=\"projectstatus == 'CREATING'\">\r\n        <div class=\"sectionbody\">\r\n          <div class=\"sk-circle\">\r\n            <div class=\"sk-circle1 sk-child\"></div>\r\n            <div class=\"sk-circle2 sk-child\"></div>\r\n            <div class=\"sk-circle3 sk-child\"></div>\r\n            <div class=\"sk-circle4 sk-child\"></div>\r\n            <div class=\"sk-circle5 sk-child\"></div>\r\n            <div class=\"sk-circle6 sk-child\"></div>\r\n            <div class=\"sk-circle7 sk-child\"></div>\r\n            <div class=\"sk-circle8 sk-child\"></div>\r\n            <div class=\"sk-circle9 sk-child\"></div>\r\n            <div class=\"sk-circle10 sk-child\"></div>\r\n            <div class=\"sk-circle11 sk-child\"></div>\r\n            <div class=\"sk-circle12 sk-child\"></div>\r\n          </div>\r\n          <br />\r\n          Your data is being securely transfered to DataRobot from the Qlik Associative Engine\r\n        </div>\r\n      </div>\r\n      <div ng-show=\"projectstatus == 'CREATED'\">\r\n        <div class=\"sectionbody\">\r\n          The data has been securely transfered to DataRobot\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"sectionblock\" ng-show=\"projectstatus == 'CREATED'\">\r\n      <div class=\"sectionheader\">Step 3: Explore in DataRobot\r\n        <div class=\"right\">\r\n          <button class=\"lui-button\" ng-click=\"restart()\">\r\n            <span class=\"lui-button__icon  lui-icon  lui-icon--reload\"></span>\r\n          </button>\r\n        </div>\r\n      </div>\r\n      <div class=\"sectionbody\">\r\n        <button class=\"lui-button lui-button--block lui-button--large lui-button--info\" ng-click=\"linkToDataRobot()\">Open DataRobot Project</button>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"rightpanel\">\r\n    <div class=\"fieldlist\">\r\n      <div class=\"fieldlistheader\">\r\n        <div class=\"fieldlisttitle\">Field List ({{countSelected()}})</div>\r\n        <div class=\"fieldlistsearch\">\r\n\r\n          <div class=\"lui-search\">\r\n            <span class=\"lui-icon  lui-icon--search  lui-search__search-icon\"></span>\r\n            <input class=\"lui-search__input\" maxlength=\"255\" spellcheck=\"false\" type=\"text\" ng-model=\"searchtext\" ng-value=\"searchtext\" ng-change=\"searchFields(searchtext)\" placeholder=\"Search\" />\r\n            <button class=\"lui-search__clear-button\" ng-click=\"clearSearch()\">\r\n              <span class=\"lui-icon  lui-icon--small  lui-icon--close\"></span>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div>\r\n        <span class=\"lui-list__text titleselectall\">\r\n          <label class=\"lui-checkbox\">\r\n            <input class=\"lui-checkbox__input\" type=\"checkbox\" aria-label=\"Label\" ng-change=\"selectAll()\" ng-model=\"selectallvalue\" ng-value=\"selectallvalue\" ng-disabled=\"countSelected() === 0\" />\r\n            <div class=\"lui-checkbox__check-wrap\">\r\n              <span class=\"lui-checkbox__check\"></span>\r\n            </div>\r\n          </label>\r\n        </span>\r\n        <div class=\"titleleft\">Field Name</div>\r\n        <div class=\"titleright\">More Information</div>\r\n      </div>\r\n      <div class=\"fieldlistscroll\">\r\n        <ul class=\"lui-list\">\r\n          <span ng-repeat=\"t in tableModel.getFieldList().tables\">\r\n            <li class=\"lui-list__header listheader\">\r\n              <span class=\"lui-list__text\">\r\n                <span class=\"lui-checkbox__check-text\">{{t.qName}}</span>\r\n                <div class=\"cardinality\">Rows: {{t.qNoOfRows}}</div>\r\n              </span>\r\n            </li>\r\n            <li class=\"lui-list__item lui-disabled\" ng-show=\"!t.enabled\">\r\n              <span class=\"lui-list__text\">\r\n                <span class=\"lui-checkbox__check-text disabledtext\">This table is not assocated to a field already selected</span>\r\n              </span>\r\n            </li>\r\n            <span ng-repeat=\"f in t.qFields\">\r\n              <li class=\"lui-list__item\" ng-show=\"showField(t,f)\" ng-click=\"selectFieldInfo(t,f)\">\r\n                <span class=\"lui-list__text\">\r\n                  <label class=\"lui-checkbox checkbox\">\r\n                    <input class=\"lui-checkbox__input\" type=\"checkbox\" aria-label=\"Label\" ng-model=\"tableModel.getFieldList().selections[f.qName].enabled\" ng-value=\"tableModel.getFieldList().selections[f.qName].enabled\" ng-change=\"fieldSelectionChange()\" />\r\n                    <div class=\"lui-checkbox__check-wrap\">\r\n                      <span class=\"lui-checkbox__check\"></span>\r\n\r\n                    </div>\r\n                  </label>\r\n                  <span class=\"lui-checkbox__check-text checktext\">{{f.qName}}</span>\r\n                  <div class=\"cardinality\">\r\n                    <span class=\"lui-icon lui-icon--key warning\" ng-show=\"f.qTags.includes('$key')\"></span>\r\n                    <span class=\"lui-icon lui-icon--warning-triangle warning\" ng-show=\"f.qnPresentDistinctValues === f.qnNonNulls\"></span>\r\n                    <span class=\"lui-icon lui-icon--more\"></span>\r\n                  </div>\r\n\r\n                </span>\r\n              </li>\r\n              <li class=\"lui-list__item\" ng-show=\"showField(t,f) && showFieldInfo(t,f)\">\r\n                <div class=\"fieldinfo\">\r\n                  <ul class=\"lui-tabset lui-tabset--fill\" style=\"border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(0, 0, 0, 0.1);\">\r\n                    <li class=\"lui-tab\" ng-class=\"classForSelectedTab('DM')\" ng-click=\"selectTab('DM',f)\">\r\n                      <span class=\"lui-tab__text\">Data Model</span>\r\n                    </li>\r\n                    <li class=\"lui-tab\" ng-class=\"classForSelectedTab('D')\" ng-click=\"selectTab('D',f)\">\r\n                      <span class=\"lui-tab__text\">Distribution</span>\r\n                    </li>\r\n                    <li ng-show=\"false\" class=\"lui-tab\" ng-class=\"classForSelectedTab('S')\" ng-click=\"selectTab('S',f)\">\r\n                      <span class=\"lui-tab__text\">Statistics</span>\r\n                    </li>\r\n                  </ul>\r\n                  <div class=\"fieldinfotab\" ng-if=\"infoSelectedTab === 'DM'\">\r\n                    <div class=\"iconbar\">\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$key')\"><span class=\"lui-icon lui-icon--key\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$geoname')\"><span class=\"lui-icon lui-icon--map\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$text')\"><span class=\"lui-icon lui-icon--text\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$numeric')\"><span class=\"lui-icon lui-icon--kpi\"></span></div>\r\n                      <div class=\"icon\" ng-show=\"f.qTags.includes('$date')\"><span class=\"lui-icon lui-icon--calendar\"></span></div>\r\n                    </div>\r\n                    <div class=\"infolist\">\r\n                      <div class=\"infolistitem\">Information Density:<div class=\"infolistitemvalue\">{{Math.floor(f.qInformationDensity*100) + \"%\"}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Subset Ratio:<div class=\"infolistitemvalue\">{{Math.floor(f.qSubsetRatio*100)}}%</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Non Nulls:<div class=\"infolistitemvalue\">{{f.qnNonNulls}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Present Distinct Values:<div class=\"infolistitemvalue\">{{f.qnPresentDistinctValues}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Total Distinct Values:<div class=\"infolistitemvalue\">{{f.qnTotalDistinctValues}}</div>\r\n                      </div>\r\n                      <div class=\"infolistitem\">Rows:<div class=\"infolistitemvalue\">{{f.qnRows}}</div>\r\n                      </div>\r\n                    </div>\r\n                    <div class=\"footnote\">\r\n                      <ul>\r\n                        <span ng-repeat=\"m in f.warningMessages\">\r\n                        <li class=\"warning\">{{m}}</li>\r\n                        </span>\r\n                        <li ng-show=\"f.qTags.includes('$key')\">This field is a key, values will originate from all the tables that share this key.</li>\r\n                        <li ng-show=\"true\">Information relates to the data model, selections are not reflected in these statistics.</li>\r\n                      </ul>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"fieldinfotab fieldinfotabchart\" ng-if=\"infoSelectedTab === 'D'\">\r\n                    <div class=\"fieldinfodistheader\">\r\n                      {{currentChartInfo}}\r\n                    </div>\r\n                    <div class=\"chart\" id=\"{{'distviz' + f.uid}}\"></div>\r\n                  </div>\r\n                </div>\r\n              </li>\r\n            </span>\r\n          </span>\r\n        </ul>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n";
 
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,"__esModule",{value:!0});var about={type:"items",label:"About",items:{about1:{type:"string",component:"text",label:"Steven Pressland, Qlik Solution Architect, 2018"},about1a:{type:"string",component:"text",label:"Version: 1.2.0"},about2:{type:"string",component:"text",label:"GitHub: www.github.com/analyticsearth"},about3:{type:"string",component:"text",label:"Qlik2DataRobot is a client extension to send data directly from your Qlik Sense application to DataRobot."},about4:{type:"string",component:"text",label:"The accompanying Qlik2DataRobot analytic connector is required to be setup and configured on your Qlik Sense environment."},about5:{type:"string",component:"text",label:"See documentation for details."}}};exports.default={type:"items",component:"accordion",items:{datarobot:{type:"items",label:"Qlik 2 DataRobot",items:{apiendpoint:{type:"string",ref:"props.endpoint",label:"API Endpoint",defaultValue:"https://app.datarobot.com"},webendpoint:{type:"string",ref:"props.webendpoint",label:"Web Endpoint",defaultValue:"https://app.datarobot.com"},apitoken:{type:"string",ref:"props.apitoken",label:"API Token"},ssename:{type:"string",ref:"props.ssename",label:"Analytic Connector",defaultValue:"DataRobot"}}},settings:{uses:"settings"},about:about}};
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var about = {
+  type: "items",
+  label: "About",
+  items: {
+    about1: {
+      type: "string",
+      component: "text",
+      label: "Steven Pressland, Qlik Solution Architect, 2018"
+    },
+    about1a: {
+      type: "string",
+      component: "text",
+      label: "Version: " + "1.2.0"
+    },
+    about2: {
+      type: "string",
+      component: "text",
+      label: "GitHub: www.github.com/analyticsearth"
+    },
+    about3: {
+      type: "string",
+      component: "text",
+      label: "Qlik2DataRobot is a client extension to send data directly from your Qlik Sense application to DataRobot."
+    },
+    about4: {
+      type: "string",
+      component: "text",
+      label: "The accompanying Qlik2DataRobot analytic connector is required to be setup and configured on your Qlik Sense environment."
+    },
+    about5: {
+      type: "string",
+      component: "text",
+      label: "See documentation for details."
+    }
+  }
+};
+
+exports.default = {
+  type: "items",
+  component: "accordion",
+  items: {
+    datarobot: {
+      type: "items",
+      label: "Qlik 2 DataRobot",
+      items: {
+        apiendpoint: {
+          type: "string",
+          ref: "props.endpoint",
+          label: "API Endpoint",
+          defaultValue: "https://app.datarobot.com"
+        },
+        webendpoint: {
+          type: "string",
+          ref: "props.webendpoint",
+          label: "Web Endpoint",
+          defaultValue: "https://app.datarobot.com"
+        },
+        apitoken: {
+          type: "string",
+          ref: "props.apitoken",
+          label: "API Token"
+        },
+        ssename: {
+          type: "string",
+          ref: "props.ssename",
+          label: "Analytic Connector",
+          defaultValue: "DataRobot"
+        }
+      }
+    },
+    settings: {
+      uses: "settings"
+    },
+    about: about
+  }
+};
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,'__esModule',{value:!0});var _QlikDataModel=__webpack_require__(6),_QlikDataModel2=_interopRequireDefault(_QlikDataModel);function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}var qlik=window.require('qlik');exports.default=['$scope','$element',function(a){a.app=qlik.currApp(this),a.qlik=qlik,a.projectname='',a.projectstatus='NOT_CREATED',a.projectid='',a.infoSelectedTable='',a.infoSelectedField='',a.infoSelectedTab='DM',a.Math=Math,a.currentChartInfo='',a.infoCurrentVis,a.tableModel=new _QlikDataModel2.default,void 0,a.connectDataRobot=function(){var b=a.layout.props.apitoken;''==b&&(b=a.apitoken),void 0,'undefined'!=typeof b&&''!=b?a.createProject(b):alert('Please enter an API Token in the properties panel to authenticate with DataRobot')},a.selectAll=function(){return a.tableModel.selectAll(a.selectallvalue)},a.clearSearch=function(){return a.searchtext='',a.tableModel.clearSearch()},a.searchFields=function(b){return a.tableModel.searchFields(b)},a.countSelected=function(){return a.tableModel.countSelected()},a.fieldSelectionChange=function(){a.tableModel.tablesEnabledForSelectedFields()},a.createProject=function(b){a.projectstatus='CREATING';var c=a.tableModel.selectedFields().map(function(a){return'['+a+']'}).join(',');void 0,void 0;var d={request_type:'createproject',auth_config:{api_token:b,endpoint:a.layout.props.endpoint+'/api/v2'},project_name:a.projectname},e=a.layout.props.ssename+'.ScriptAggrStr(\''+JSON.stringify(d)+'\','+c+')';a.app.createCube({qMeasures:[{qDef:{qDef:e,qAggrFunc:'None'}}],qInitialDataFetch:[{qTop:0,qLeft:0,qHeight:1,qWidth:1}]}).then(function(b){var c=!1;'undefined'==typeof b.layout.qHyperCube.qError?a.projectid=b.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText:(a.projecterror='ERROR',a.projectstatus='NOT_CREATED',c=!0),a.app.destroySessionObject(b.layout.qInfo.qId).then(function(){a.projectstatus=c?'NOT_CREATED':'CREATED'})})},a.restart=function(){a.projectname='',a.projectstatus='NOT_CREATED',a.projectid=''},a.linkToDataRobot=function(){var b=a.layout.props.webendpoint+'/projects/'+a.projectid,c=window.open(b,'_blank');c.focus()},a.showField=function(b,c){return a.tableModel.showField(b,c)},a.showFieldInfo=function(b,c){return b.qName===a.infoSelectedTable&&c.qName===a.infoSelectedField},a.selectFieldInfo=function(b,c){b.qName===a.infoSelectedTable&&c.qName===a.infoSelectedField?(a.infoSelectedTable='',a.infoSelectedField=''):(a.infoSelectedTable=b.qName,a.infoSelectedField=c.qName),a.selectTab(a.infoSelectedTab,c)},a.selectTab=function(b,c){//console.log(tab);
-a.infoSelectedTab=b,'D'===b&&a.createVisualization(c,'distviz'+c.uid)},a.classForSelectedTab=function(b){//console.log(tab);
-if(a.infoSelectedTab===b)return'lui-active'},a.createVisualization=function(b,c){var d='barchart',e=b.qName,f=[];//Pick the chart type
-b.qTags.includes('$text')&&(d='barchart',a.currentChartInfo='Categorical Field: Frequency Distribution'),b.qTags.includes('$numeric')&&(d='histogram',a.currentChartInfo='Numeric Field: Histogram Distribution'),'barchart'==d&&(b.qnPresentDistinctValues===b.qnNonNulls?(d='kpi',f.push({qDef:{qLabel:'Count of '+e,qDef:'=Count(['+e+'])'}}),a.currentChartInfo=' All Unique Values - This field is not likely to be useful for predictive analysis'):(f.push({qDef:{qFieldLabels:[e],qFieldDefs:['['+e+']']}}),f.push({qDef:{qLabel:'Count of '+e,qDef:'=Count(['+e+'])'}}))),'histogram'==d&&f.push({qDef:{qFieldLabels:[e],qFieldDefs:['['+e+']']}}),void 0,void 0,a.app.visualization.create(d,f,{showTitles:!1,gridLine:{auto:!1,spacing:0},legend:{show:!1},dimensionAxis:{show:'labels',continuousAuto:!0},measureAxis:{show:'labels'},preferContinuousAxis:!0,showMiniChartForContinuousAxis:!1}).then(function(b){void 0,'undefined'!=typeof a.infoCurrentVis&&(void 0,a.infoCurrentVis.close()),a.infoCurrentVis=b,b.show(c)})}}];
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _QlikDataModel = __webpack_require__(6);
+
+var _QlikDataModel2 = _interopRequireDefault(_QlikDataModel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var qlik = window.require('qlik');
+
+exports.default = ['$scope', '$element', function ($scope, $element) {
+  $scope.app = qlik.currApp(this);
+  $scope.qlik = qlik;
+  $scope.projectname = "";
+  $scope.projectstatus = "NOT_CREATED";
+  $scope.projectid = "";
+  $scope.infoSelectedTable = "";
+  $scope.infoSelectedField = "";
+  $scope.infoSelectedTab = "DM";
+  $scope.Math = Math;
+  $scope.currentChartInfo = "";
+  $scope.infoCurrentVis;
+
+  $scope.tableModel = new _QlikDataModel2.default();
+
+  console.log($scope);
+
+  $scope.connectDataRobot = function () {
+
+    var apitoken = $scope.layout.props.apitoken;
+    if (apitoken == "") {
+      apitoken = $scope.apitoken;
+    }
+    console.log(apitoken);
+
+    if (typeof apitoken != "undefined" && apitoken != "") {
+      $scope.createProject(apitoken);
+    } else {
+      alert("Please enter an API Token in the properties panel to authenticate with DataRobot");
+    }
+  };
+
+  $scope.selectAll = function () {
+    return $scope.tableModel.selectAll($scope.selectallvalue);
+  };
+
+  $scope.clearSearch = function () {
+    $scope.searchtext = '';
+    return $scope.tableModel.clearSearch();
+  };
+
+  $scope.searchFields = function (searchvalue) {
+    return $scope.tableModel.searchFields(searchvalue);
+  };
+
+  $scope.countSelected = function () {
+    return $scope.tableModel.countSelected();
+  };
+
+  $scope.fieldSelectionChange = function () {
+    $scope.tableModel.tablesEnabledForSelectedFields();
+  };
+
+  $scope.createProject = function (apitoken) {
+    $scope.projectstatus = "CREATING";
+    var fields = $scope.tableModel.selectedFields().map(function (f) {
+      return "[" + f + "]";
+    }).join(",");
+    console.log(fields);
+    console.log($scope.projectname);
+
+    var request = {
+      request_type: "createproject",
+      auth_config: {
+        api_token: apitoken,
+        endpoint: $scope.layout.props.endpoint + "/api/v2"
+      },
+      project_name: $scope.projectname
+    };
+
+    var qlikcall = $scope.layout.props.ssename + '.ScriptAggrStr(\'' + JSON.stringify(request) + '\',' + fields + ')';
+
+    console.log(qlikcall);
+
+    var cubedef = {
+      qMeasures: [{
+        qDef: {
+          qDef: qlikcall,
+          qAggrFunc: "None"
+        }
+      }],
+      qInitialDataFetch: [{
+        qTop: 0,
+        qLeft: 0,
+        qHeight: 1,
+        qWidth: 1
+      }]
+    };
+    $scope.app.createCube(cubedef).then(function (cube) {
+      var error = false;
+      if (typeof cube.layout.qHyperCube.qError != 'undefined') {
+        $scope.projecterror = "ERROR";
+        $scope.projectstatus = "NOT_CREATED";
+        error = true;
+      } else {
+        $scope.projectid = cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText;
+      }
+      $scope.app.destroySessionObject(cube.layout.qInfo.qId).then(function (obj) {
+        if (error) {
+          $scope.projectstatus = "NOT_CREATED";
+        } else {
+          $scope.projectstatus = "CREATED";
+        }
+      });
+    });
+  };
+
+  $scope.restart = function () {
+    $scope.projectname = "";
+    $scope.projectstatus = "NOT_CREATED";
+    $scope.projectid = "";
+  };
+
+  $scope.linkToDataRobot = function () {
+    var link = $scope.layout.props.webendpoint + '/projects/' + $scope.projectid;
+    var win = window.open(link, '_blank');
+    win.focus();
+  };
+
+  $scope.showField = function (t, f) {
+    return $scope.tableModel.showField(t, f);
+  };
+
+  $scope.showFieldInfo = function (t, f) {
+    return t.qName === $scope.infoSelectedTable && f.qName === $scope.infoSelectedField;
+  };
+
+  $scope.selectFieldInfo = function (t, f) {
+    if (t.qName === $scope.infoSelectedTable && f.qName === $scope.infoSelectedField) {
+      $scope.infoSelectedTable = "";
+      $scope.infoSelectedField = "";
+    } else {
+      $scope.infoSelectedTable = t.qName;
+      $scope.infoSelectedField = f.qName;
+    }
+    $scope.selectTab($scope.infoSelectedTab, f);
+  };
+
+  $scope.selectTab = function (tab, field) {
+    //console.log(tab);
+    $scope.infoSelectedTab = tab;
+    if (tab === "D") {
+      $scope.createVisualization(field, 'distviz' + field.uid);
+    }
+  };
+
+  $scope.classForSelectedTab = function (tab) {
+    //console.log(tab);
+    if ($scope.infoSelectedTab === tab) return "lui-active";
+  };
+
+  $scope.createVisualization = function (field, domid) {
+    console.log("Create Visualization");
+
+    var charttype = 'barchart';
+    var fieldname = field.qName;
+    var columns = [];
+
+    //Pick the chart type
+    if (field.qTags.includes('$text')) {
+      charttype = 'barchart';
+      $scope.currentChartInfo = "Categorical Field: Frequency Distribution";
+    }
+    if (field.qTags.includes('$numeric')) {
+      charttype = 'histogram';
+      $scope.currentChartInfo = "Numeric Field: Histogram Distribution";
+    }
+
+    //Set the columns for the chosen chart type
+    if (charttype === "barchart") {
+      if (field.qnPresentDistinctValues === field.qnNonNulls) {
+        //Unique value per row
+        charttype = 'kpi';
+        columns.push({ qDef: {
+            qLabel: "Count of " + fieldname,
+            qDef: "=Count([" + fieldname + "])"
+          } });
+        $scope.currentChartInfo = " All Unique Values - This field is not likely to be useful for predictive analysis";
+      } else {
+        columns.push({ qDef: {
+            qFieldLabels: [fieldname],
+            qFieldDefs: ["[" + fieldname + "]"]
+          } });
+        columns.push({ qDef: {
+            qLabel: "Count of " + fieldname,
+            qDef: "=Count([" + fieldname + "])"
+          } });
+      }
+    }
+
+    if (charttype === "histogram") {
+      columns.push({ qDef: {
+          qFieldLabels: [fieldname],
+          qFieldDefs: ["[" + fieldname + "]"]
+        } });
+    }
+
+    console.log(charttype);
+    console.log(columns);
+
+    $scope.app.visualization.create(charttype, columns, {
+
+      showTitles: false,
+      gridLine: {
+        auto: false,
+        spacing: 0
+      },
+      legend: {
+        show: false
+      },
+      dimensionAxis: {
+        show: "labels",
+        continuousAuto: true
+      },
+      measureAxis: {
+        show: "labels"
+      },
+      preferContinuousAxis: true,
+      showMiniChartForContinuousAxis: false
+    }).then(function (vis) {
+      console.log("Show Visualization");
+      if (typeof $scope.infoCurrentVis != 'undefined') {
+        console.log("Remove Vis");
+        $scope.infoCurrentVis.close();
+      }
+      $scope.infoCurrentVis = vis;
+      vis.show(domid);
+    });
+  };
+}];
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-var _createClass=function(){function a(a,b){for(var c,d=0;d<b.length;d++)c=b[d],c.enumerable=c.enumerable||!1,c.configurable=!0,'value'in c&&(c.writable=!0),Object.defineProperty(a,c.key,c)}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}();Object.defineProperty(exports,'__esModule',{value:!0});function _toConsumableArray(a){if(Array.isArray(a)){for(var b=0,c=Array(a.length);b<a.length;b++)c[b]=a[b];return c}return Array.from(a)}function _classCallCheck(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}var QlikDataModel=function(){function a(){_classCallCheck(this,a),this.setup=!1}return _createClass(a,[{key:'setModel',value:function b(a){this.model=a,this.setup=!0,this.setTablesEnabled(),this.setTablesAndFieldsId(),this.selections={},this.resetSearch()}},{key:'setTablesEnabled',value:function a(){this.setup&&this.model.qtr.forEach(function(a){return a.enabled=!0})}},{key:'setTablesAndFieldsId',value:function b(){var a=0;this.setup&&this.model.qtr.forEach(function(b){b.qFields.forEach(function(b){b.uid=a,a++,b.warningMessages=[],b.qnPresentDistinctValues===b.qnNonNulls&&(b.warning=!0,b.warningMessages.push('This field has a lot of unique values, it is not likely to be useful for predictive analysis.'))})})}},{key:'getFieldList',value:function b(){if(this.setup){var a={tables:this.model.qtr,selections:this.selections};return a}}},{key:'tablesEnabledForSelectedFields',value:function c(){var a=this;if(this.setup){var b=Object.keys(this.selections).filter(function(b){return!0===a.selections[b].enabled}).map(function(b){return a.getTableListForField(b)});if(b=[].concat(_toConsumableArray(new Set([].concat.apply([],b)))),0===b.length)this.setTablesEnabled();else{var d=this.getTablesAssociatedToTable(this.model.qk,b,[],1);0===d.length&&(d=b),this.model.qtr.forEach(function(a){a.enabled=d.includes(a.qName)})}}}},{key:'getTablesAssociatedToTable',value:function l(a,b,c,d){if(this.setup){var e=b.map(function(b){return a.filter(function(a){return a.qTables.includes(b)})}).map(function(a){return a.map(function(a){return a.qTables})}),f=[].concat(_toConsumableArray(new Set([].concat.apply([],e)))),g=[].concat(_toConsumableArray(new Set([].concat.apply([],f)))),h=g.filter(function(a){return!b.includes(a)}),i=h.filter(function(a){return!c.includes(a)});if(0<i.length){var j=c.concat(i),k=this.getTablesAssociatedToTable(a,h,j,d+1);return k}return g}}},{key:'getTableListForField',value:function b(a){return this.setup?this.model.qtr.filter(function(b){return 0<b.qFields.filter(function(b){return b.qName===a}).length}).map(function(a){return a.qName}):void 0}},{key:'selectAll',value:function c(a){var b=this;this.setup&&(a?this.model.qtr.forEach(function(a){a.enabled&&a.qFields.forEach(function(c){b.showField(a,c)&&(c.qName in b.selections?b.selections[c.qName].enabled=!0:b.selections[c.qName]={enabled:!0})})}):(Object.keys(this.selections).forEach(function(a){b.selections[a].enabled=!1}),this.tablesEnabledForSelectedFields()))}},{key:'clearSearch',value:function a(){this.setup&&this.searchFields('')}},{key:'searchFields',value:function b(a){this.setup&&(''==a?this.resetSearch():this.model.qtr.forEach(function(b){b.qFields.forEach(function(b){b.show=!!b.qName.toUpperCase().includes(a.toUpperCase())})}))}},{key:'resetSearch',value:function a(){this.setup&&this.model.qtr.forEach(function(a){a.qFields.forEach(function(a){a.show=!0})})}},{key:'countSelected',value:function a(){return this.setup?this.selectedFields().length:void 0}},{key:'selectedFields',value:function b(){var a=this;return this.setup?Object.keys(this.selections).filter(function(b){return!0===a.selections[b].enabled}).sort():void 0}},{key:'showField',value:function c(a,b){return this.setup?!!(a.enabled&&b.show)&&!b.qTags.includes('$hidden'):void 0}}]),a}();exports.default=QlikDataModel;
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var QlikDataModel = function () {
+  function QlikDataModel() {
+    _classCallCheck(this, QlikDataModel);
+
+    this.setup = false;
+  }
+
+  _createClass(QlikDataModel, [{
+    key: "setModel",
+    value: function setModel(tablesAndKeys) {
+      this.model = tablesAndKeys;
+      this.setup = true;
+      this.setTablesEnabled();
+      this.setTablesAndFieldsId();
+      this.selections = {};
+      this.resetSearch();
+    }
+  }, {
+    key: "setTablesEnabled",
+    value: function setTablesEnabled() {
+      if (!this.setup) return;
+      this.model.qtr.forEach(function (val) {
+        return val.enabled = true;
+      });
+    }
+  }, {
+    key: "setTablesAndFieldsId",
+    value: function setTablesAndFieldsId() {
+      var idcounter = 0;
+      if (!this.setup) return;
+      this.model.qtr.forEach(function (table) {
+        table.qFields.forEach(function (field) {
+          field.uid = idcounter;
+          idcounter++;
+
+          field.warningMessages = [];
+          if (field.qnPresentDistinctValues === field.qnNonNulls) {
+            field.warning = true;
+            field.warningMessages.push("This field has a lot of unique values, it is not likely to be useful for predictive analysis unless you include a field from another associated table with more rows.");
+          }
+
+          if (field.qTags.includes('$key')) {
+            field.warning = true;
+            field.warningMessages.push("This field is a key, in most situations this field is not useful for predictive analytics.");
+          }
+        });
+      });
+    }
+  }, {
+    key: "getFieldList",
+    value: function getFieldList() {
+      if (!this.setup) return;
+      var list = {
+        tables: this.model.qtr,
+        selections: this.selections
+      };
+      return list;
+    }
+  }, {
+    key: "tablesEnabledForSelectedFields",
+    value: function tablesEnabledForSelectedFields() {
+      var _this = this;
+
+      if (!this.setup) return;
+      var tables = Object.keys(this.selections).filter(function (s) {
+        return _this.selections[s].enabled === true;
+      }).map(function (field) {
+        return _this.getTableListForField(field);
+      });
+      tables = [].concat(_toConsumableArray(new Set([].concat.apply([], tables))));
+      console.log(tables);
+      if (tables.length === 0) {
+        this.setTablesEnabled();
+      } else {
+        var t2 = this.getTablesAssociatedToTable(this.model.qk, tables, [], 1);
+        console.log(t2);
+        if (t2.length === 0) t2 = tables;
+        this.model.qtr.forEach(function (item) {
+          item.enabled = t2.includes(item.qName);
+        });
+      }
+    }
+  }, {
+    key: "getTablesAssociatedToTable",
+    value: function getTablesAssociatedToTable(array, tables, ignore, level) {
+      if (!this.setup) return;
+      var t1 = tables.map(function (table) {
+        return array.filter(function (key) {
+          return key.qTables.includes(table);
+        });
+      }).map(function (item) {
+        return item.map(function (key) {
+          return key.qTables;
+        });
+      });
+
+      var t2 = [].concat(_toConsumableArray(new Set([].concat.apply([], t1))));
+      var t2a = [].concat(_toConsumableArray(new Set([].concat.apply([], t2))));
+      var t3 = t2a.filter(function (table) {
+        return !tables.includes(table);
+      });
+      var t3a = t3.filter(function (table) {
+        return !ignore.includes(table);
+      });
+      if (t3a.length > 0) {
+        var ignore2 = ignore.concat(t3a);
+        var t4 = this.getTablesAssociatedToTable(array, t3, ignore2, level + 1);
+        return t4;
+      } else {
+        return t2a;
+      }
+    }
+  }, {
+    key: "getTableListForField",
+    value: function getTableListForField(fieldname) {
+      if (!this.setup) return;
+      return this.model.qtr.filter(function (table) {
+        return table.qFields.filter(function (field) {
+          return field.qName === fieldname;
+        }).length > 0;
+      }).map(function (tablelist) {
+        return tablelist.qName;
+      });
+    }
+  }, {
+    key: "selectAll",
+    value: function selectAll(selectallvalue) {
+      var _this2 = this;
+
+      if (!this.setup) return;
+      if (selectallvalue) {
+        //Select All Values
+        this.model.qtr.forEach(function (table) {
+          if (table.enabled) {
+            table.qFields.forEach(function (field) {
+              if (_this2.showField(table, field)) if (!(field.qName in _this2.selections)) {
+                _this2.selections[field.qName] = { enabled: true };
+              } else {
+                _this2.selections[field.qName].enabled = true;
+              }
+            });
+          }
+        });
+      } else {
+        //Unselect All Values
+        Object.keys(this.selections).forEach(function (obj) {
+          _this2.selections[obj].enabled = false;
+        });
+        this.tablesEnabledForSelectedFields();
+      }
+    }
+  }, {
+    key: "clearSearch",
+    value: function clearSearch() {
+      if (!this.setup) return;
+      this.searchFields('');
+    }
+  }, {
+    key: "searchFields",
+    value: function searchFields(searchvalue) {
+      if (!this.setup) return;
+      if (searchvalue == '') {
+        this.resetSearch();
+      } else {
+        this.model.qtr.forEach(function (table) {
+          table.qFields.forEach(function (field) {
+            if (!field.qName.toUpperCase().includes(searchvalue.toUpperCase())) {
+              field.show = false;
+            } else {
+              field.show = true;
+            }
+          });
+        });
+      }
+    }
+  }, {
+    key: "resetSearch",
+    value: function resetSearch() {
+      if (!this.setup) return;
+      this.model.qtr.forEach(function (table) {
+        table.qFields.forEach(function (field) {
+          field.show = true;
+        });
+      });
+    }
+  }, {
+    key: "countSelected",
+    value: function countSelected() {
+      if (!this.setup) return;
+      return this.selectedFields().length;
+    }
+  }, {
+    key: "selectedFields",
+    value: function selectedFields() {
+      var _this3 = this;
+
+      if (!this.setup) return;
+      return Object.keys(this.selections).filter(function (obj) {
+        return _this3.selections[obj].enabled === true;
+      }).sort();
+    }
+  }, {
+    key: "showField",
+    value: function showField(t, f) {
+      if (!this.setup) return;
+      if (t.enabled && f.show) {
+        if (f.qTags.includes("$hidden")) return false;
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }]);
+
+  return QlikDataModel;
+}();
+
+exports.default = QlikDataModel;
 
 /***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(){var a=this,b=this.$scope.app;//console.log("Paint");
-void 0,void 0,this.$scope.navmode=this.$scope.qlik.navigation.getMode(),void 0,void 0,this.$scope.app.model.engineApp.getTablesAndKeys({qcx:1e3,qcy:1e3},{qcx:1e3,qcy:1e3},20,!0,!1).then(function(b){//this.$scope.keymodel = res;
-void 0,a.$scope.tableModel.setModel(b)})};
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function ($element, layout) {
+  var _this = this;
+
+  //console.log("Paint");
+  var app = this.$scope.app;
+
+  console.log("Paint");
+  console.log(layout);
+  this.$scope.navmode = this.$scope.qlik.navigation.getMode();
+  console.log(this.$scope.navmode);
+  console.log(this.$scope);
+
+  this.$scope.app.model.engineApp.getTablesAndKeys({ qcx: 1000, qcy: 1000 }, { qcx: 1000, qcy: 1000 }, 20, true, false).then(function (res) {
+    console.log(res);
+    //this.$scope.keymodel = res;
+    _this.$scope.tableModel.setModel(res);
+  });
+};
 
 /***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=function(){var a=this,b=a.$scope.viz;this.$scope.navmode=this.$scope.qlik.navigation.getMode(),void 0};
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function ($element, layout) {
+  var ext = this;
+  var viz = ext.$scope.viz;
+
+  this.$scope.navmode = this.$scope.qlik.navigation.getMode();
+  console.log(this.$scope.navmode);
+};
 
 /***/ }),
 /* 9 */

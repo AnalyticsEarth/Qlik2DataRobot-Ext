@@ -119,7 +119,8 @@
                   </label>
                   <span class="lui-checkbox__check-text checktext">{{f.qName}}</span>
                   <div class="cardinality">
-                    <span class="lui-icon lui-icon--warning-triangle warning" ng-if="f.qnPresentDistinctValues === f.qnNonNulls"></span>
+                    <span class="lui-icon lui-icon--key warning" ng-show="f.qTags.includes('$key')"></span>
+                    <span class="lui-icon lui-icon--warning-triangle warning" ng-show="f.qnPresentDistinctValues === f.qnNonNulls"></span>
                     <span class="lui-icon lui-icon--more"></span>
                   </div>
 
