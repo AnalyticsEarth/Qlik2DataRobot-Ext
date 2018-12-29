@@ -62,8 +62,6 @@ export default ['$scope', '$element', function($scope, $element) {
   $scope.createProject = ((apitoken) => {
     $scope.projectstatus = "CREATING";
     var fields = $scope.tableModel.selectedFields().map(f => "[" + f + "]").join(",");
-    console.log(fields);
-    console.log($scope.projectname);
 
     var request = {
       request_type: "createproject",
@@ -76,39 +74,45 @@ export default ['$scope', '$element', function($scope, $element) {
 
     var qlikcall = `${$scope.layout.props.ssename}.ScriptAggrStr('${JSON.stringify(request)}',${fields})`;
 
-    console.log(qlikcall);
-
-    var cubedef = {
-      qMeasures: [{
-        qDef: {
-          qDef: qlikcall,
-          qAggrFunc: "None",
-        }
-      }],
-      qInitialDataFetch: [{
-        qTop: 0,
-        qLeft: 0,
-        qHeight: 1,
-        qWidth: 1
-      }]
-    };
-    $scope.app.createCube(cubedef).then((cube) => {
-      var error = false;
-      if(typeof cube.layout.qHyperCube.qError != 'undefined'){
+    $scope.app.model.engineApp.checkExpression(qlikcall).then(check => {
+      if(check.qErrorMsg !== ""){
         $scope.projecterror = "ERROR";
         $scope.projectstatus = "NOT_CREATED";
         error = true;
       }else{
-        $scope.projectid = cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText;
-      }
-      $scope.app.destroySessionObject(cube.layout.qInfo.qId).then((obj) => {
-        if(error){
-          $scope.projectstatus = "NOT_CREATED";
-        }else{
-          $scope.projectstatus = "CREATED";
-        }
+        var cubedef = {
+          qMeasures: [{
+            qDef: {
+              qDef: qlikcall,
+              qAggrFunc: "None",
+            }
+          }],
+          qInitialDataFetch: [{
+            qTop: 0,
+            qLeft: 0,
+            qHeight: 1,
+            qWidth: 1
+          }]
+        };
+        $scope.app.createCube(cubedef).then((cube) => {
+          var error = false;
+          if(typeof cube.layout.qHyperCube.qError != 'undefined'){
+            $scope.projecterror = "ERROR";
+            $scope.projectstatus = "NOT_CREATED";
+            error = true;
+          }else{
+            $scope.projectid = cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText;
+          }
+          $scope.app.destroySessionObject(cube.layout.qInfo.qId).then((obj) => {
+            if(error){
+              $scope.projectstatus = "NOT_CREATED";
+            }else{
+              $scope.projectstatus = "CREATED";
+            }
 
-      })
+          })
+        })
+      }
     })
   });
 
