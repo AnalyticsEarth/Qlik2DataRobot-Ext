@@ -1,7 +1,9 @@
 # Qlik2DataRobot-Ext
 Qlik2DataRobot-Ext is a client extension for Qlik Sense. It allows users to send data directly from a Qlik Sense application sheet, to DataRobot for analysis.
 
-The Extension requires the Analytic Connector (Qlik2DataRobot) in order to function.
+For more information on this project and integrating Qlik with DataRobot visit [Qlik Community](http://bit.ly/QlikDataRobot).
+
+The Extension requires the Analytic Connector ([Qlik2DataRobot](https://github.com/AnalyticsEarth/Qlik2DataRobot)) in order to function.
 
 ## Download
 The source code is not suitable for installing directly into Qlik Sense, please download the latest release from the releases page on this GitHub repository.
