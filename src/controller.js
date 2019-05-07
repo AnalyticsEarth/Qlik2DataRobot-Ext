@@ -56,7 +56,7 @@ export default ['$scope', '$element', function($scope, $element) {
   $scope.createProject = ((apitoken) => {
     $scope.projectstatus = "CREATING";
     var fields = $scope.tableModel.selectedFields().map(f => "[" + f + "]").join(",");
-
+    console.log($scope.projectname);
     var request = {
       request_type: "createproject",
       auth_config: {
@@ -124,6 +124,10 @@ export default ['$scope', '$element', function($scope, $element) {
 
   $scope.showField = ((t,f) =>{
     return $scope.tableModel.showField(t,f);
+  });
+
+  $scope.explainationsConvert = ((code) => {
+    return JSON.parse(code);
   });
 
 }]

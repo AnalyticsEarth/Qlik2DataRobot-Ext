@@ -39,9 +39,57 @@ export default {
   type: "items",
   component: "accordion",
   items: {
+    mode:{
+      type:"items",
+      label:"Extension Mode",
+      items:{
+        modeselector:{
+          type:"string",
+          ref:"props.mode",
+          label:"Mode",
+          defaultValue:"choose",
+          component: "dropdown",
+          options: [{
+            value: "choose",
+            label: "Select a Mode"
+          }, {
+            value: "upload",
+            label: "Upload"
+          }, {
+            value: "explain",
+            label: "Prediction Explaination"
+          }],
+        }
+      }
+    },
+    data:{
+      uses: "data",
+      items: {
+        dimensions: {
+          min: 0,
+          max: 1,
+          disabledRef: "",
+          description: (a, b) => {
+            return "Prediction Key";
+          }
+        },
+        measures:{
+          min:0,
+          max:1,
+          disabledRef:"",
+          description: (a, b) => {
+            return "Prediction Explanation Measure";
+          }
+        }
+      }
+    },
     datarobot: {
       type: "items",
       label: "Qlik 2 DataRobot",
+      show: (a) => {
+        //console.log(a);
+        return (a.props.mode == 'upload');
+      },
       items:{
         apiendpoint:{
           type: "string",
@@ -68,6 +116,22 @@ export default {
         }
       }
     },
+    addons: {
+  type: "items",
+  component: "expandable-items",
+  translation: "properties.addons",
+  items: {
+    dataHandling: {
+      uses: "dataHandling",
+      items: {
+        suppressZero: null,
+        calcCond: {
+          uses: "calcCond"
+        }
+      }
+    }
+  }
+},
     settings: {
       uses: "settings"
     },

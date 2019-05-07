@@ -1,4 +1,5 @@
-<div class="chart-container">
+<!-- Upload Data to DataRobot -->
+<div class="chart-container" ng-if="layout.props.mode == 'upload'">
   <div class="disableoverlay" ng-show="navmode == 'edit'"></div>
   <div class="leftpanel">
     <div class="logoimage connected"></div>
@@ -16,10 +17,10 @@
       <div ng-show="projectstatus == 'NOT_CREATED'">
         <div class="sectionbody">
           <label class="lui-label">Project Name</label>
-          <input class="lui-input  lui-input--large" ng-model="projectname" ng-value="projectname" />
+          <input class="lui-input  lui-input--large" ng-model="$parent.projectname" ng-value="$parent.projectname" />
           <div ng-show="layout.props.apitoken == ''">
             <label class="lui-label">API Token</label>
-            <input class="lui-input  lui-input--large" ng-model="apitoken" ng-value="apitoken" />
+            <input class="lui-input  lui-input--large" ng-model="$parent.apitoken" ng-value="$parent.apitoken" />
           </div>
         </div>
         <div class="sectionbody">
@@ -127,5 +128,19 @@
             </ul>
       </div>
     </div>
+  </div>
+</div>
+<!-- Prediction Explanations -->
+<div class="chart-container" ng-if="layout.props.mode == 'explain'">
+  <div class="explain">
+  <div class="explain-row" ng-repeat="row in layout.qHyperCube.qDataPages[0].qMatrix">
+    <div class="explain-key">{{row[0].qText}}</div>
+    <div class="explain-body" ng-init="a = explainationsConvert(row[1].qText)">
+      <div class="explain-body-row" ng-repeat="f in a">
+        <span class="explain-strength">{{f.qualitativeStrength}}</span><br/><span class="explain-feature">{{f.feature}}</span><br/>
+        <span class="explain-value">{{f.featureValue}}</span>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
