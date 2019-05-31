@@ -7,6 +7,12 @@ import resize from './resize.js';
 import localCSS from './style.scss';
 
 export default window.define([], function() {
+
+  //console.log(controller);
+  let showData = false;
+  var qlik = window.require('qlik');
+  console.log(qlik);
+
   return {
     initialProperties: initialProperties,
     support:{
@@ -16,7 +22,7 @@ export default window.define([], function() {
       viewData: false
     },
     template: template,
-    definition: definition,
+    definition: definition(showData),
     controller: controller,
     paint: paint,
     resize: resize

@@ -130,4 +130,14 @@ export default ['$scope', '$element', function($scope, $element) {
     return JSON.parse(code);
   });
 
+  $scope.selectMode = ((mode) => {
+    $scope.backendApi.applyPatches([
+      {
+        "qPath":"/props/mode",
+        "qOp":"replace",
+        "qValue":JSON.stringify(mode)
+      }
+    ],false);
+  });
+
 }]

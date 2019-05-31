@@ -1,4 +1,19 @@
 <!-- Upload Data to DataRobot -->
+<div class="chart-container choose-frame" ng-if="layout.props.mode == 'choose'">
+  <div class="choose-list">
+    <h2 class="header choose-item">
+      Select Mode
+    </h2>
+    <ul class="choose-item">
+      <li>
+        <button class="add-button lui-button ng-binding" ng-click="selectMode('upload')">Upload Data</button>
+      </li>
+      <li>
+        <button class="add-button lui-button ng-binding">Prediction Explanations</button>
+      </li>
+      </ul>
+  </div>
+</div>
 <div class="chart-container" ng-if="layout.props.mode == 'upload'">
   <div class="disableoverlay" ng-show="navmode == 'edit'"></div>
   <div class="leftpanel">
@@ -85,7 +100,7 @@
       <div>
         <span class="lui-list__text titleselectall">
           <label class="lui-checkbox">
-            <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-change="selectAll()" ng-model="selectallvalue" ng-value="selectallvalue" ng-disabled="countSelected() === 0" />
+            <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-change="selectAll()" ng-model="$parent.selectallvalue" ng-value="$parent.selectallvalue" ng-disabled="countSelected() === 0" />
             <div class="lui-checkbox__check-wrap">
               <span class="lui-checkbox__check"></span>
             </div>

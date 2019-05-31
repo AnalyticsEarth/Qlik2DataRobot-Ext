@@ -35,7 +35,7 @@ let about = {
   }
 };
 
-export default {
+let panel = {
   type: "items",
   component: "accordion",
   items: {
@@ -138,3 +138,12 @@ export default {
     about
   }
 }
+
+let panelFunc = (datamode) => {
+  console.log("Update Panel");
+  let functemp = panel;
+  functemp.items.data.show = datamode;
+  return functemp;
+}
+
+export default panelFunc;

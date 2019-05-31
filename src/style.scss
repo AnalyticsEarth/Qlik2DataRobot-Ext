@@ -343,3 +343,31 @@
   font-style: italic;
   font-size: 1.4em;
 }
+
+.choose-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choose-list {
+  min-width:250%;
+  text-align:center;
+}
+
+.choose-list  ul {
+  list-style: none;
+
+}
+.choose-list ul li {
+  margin-top:10px;
+}
+
+.choose-list ul li button {
+  height:30px;
+  width:250px;
+}
+
+.choose-item {
+  width:100%;
+}
