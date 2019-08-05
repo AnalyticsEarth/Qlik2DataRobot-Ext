@@ -2,7 +2,7 @@
   "name": "qlik2datarobotext",
   "version": "2.0.0",
   "scripts": {
-    "qext-scripts": "qext-scripts"
+    "qext-scripts": "qext-scripts",
     "watch-qext-scripts": "qext-scripts -w"
   },
   "devDependencies": {

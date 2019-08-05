@@ -9,7 +9,6 @@ import localCSS from './style.css';
 export default window.define([], function() {
 
   //console.log(controller);
-  let showData = false;
   var qlik = window.require('qlik');
   console.log(qlik);
 
@@ -22,7 +21,7 @@ export default window.define([], function() {
       viewData: false
     },
     template: template,
-    definition: definition(showData),
+    definition: definition,
     controller: controller,
     paint: paint,
     resize: resize

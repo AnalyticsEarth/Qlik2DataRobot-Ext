@@ -59,6 +59,39 @@ let panel = {
             value: "explain",
             label: "Prediction Explaination"
           }],
+        },
+        upload:{
+          type:"items",
+          show: (a) => {
+            //console.log(a);
+            return (a.props.mode == 'upload');
+          },
+          items:{
+            apiendpoint:{
+              type: "string",
+              ref:"props.endpoint",
+              label:"API Endpoint",
+              defaultValue:"https://app.datarobot.com"
+            },
+            webendpoint:{
+              type: "string",
+              ref:"props.webendpoint",
+              label:"Web Endpoint",
+              defaultValue:"https://app.datarobot.com"
+            },
+            apitoken:{
+              type: "string",
+              expression: "optional",
+              ref:"props.apitoken",
+              label:"API Token",
+            },
+            ssename:{
+              type: "string",
+              ref:"props.ssename",
+              label:"Analytic Connector",
+              defaultValue:"DataRobot"
+            }
+          }
         }
       }
     },
@@ -75,7 +108,9 @@ let panel = {
         },
         measures:{
           min:0,
-          max:1,
+          max:(a) => {
+            return a === 1;
+          },
           disabledRef:"",
           description: (a, b) => {
             return "Prediction Explanation Measure";
@@ -83,55 +118,22 @@ let panel = {
         }
       }
     },
-    datarobot: {
+    addons: {
       type: "items",
-      label: "Qlik 2 DataRobot",
-      show: (a) => {
-        //console.log(a);
-        return (a.props.mode == 'upload');
-      },
-      items:{
-        apiendpoint:{
-          type: "string",
-          ref:"props.endpoint",
-          label:"API Endpoint",
-          defaultValue:"https://app.datarobot.com"
-        },
-        webendpoint:{
-          type: "string",
-          ref:"props.webendpoint",
-          label:"Web Endpoint",
-          defaultValue:"https://app.datarobot.com"
-        },
-        apitoken:{
-          type: "string",
-          ref:"props.apitoken",
-          label:"API Token",
-        },
-        ssename:{
-          type: "string",
-          ref:"props.ssename",
-          label:"Analytic Connector",
-          defaultValue:"DataRobot"
+      component: "expandable-items",
+      translation: "properties.addons",
+      items: {
+        dataHandling: {
+          uses: "dataHandling",
+          items: {
+            suppressZero: null,
+            calcCond: {
+              uses: "calcCond"
+            }
+          }
         }
       }
     },
-    addons: {
-  type: "items",
-  component: "expandable-items",
-  translation: "properties.addons",
-  items: {
-    dataHandling: {
-      uses: "dataHandling",
-      items: {
-        suppressZero: null,
-        calcCond: {
-          uses: "calcCond"
-        }
-      }
-    }
-  }
-},
     settings: {
       uses: "settings"
     },
@@ -139,11 +141,4 @@ let panel = {
   }
 }
 
-let panelFunc = (datamode) => {
-  console.log("Update Panel");
-  let functemp = panel;
-  functemp.items.data.show = datamode;
-  return functemp;
-}
-
-export default panelFunc;
+export default panel;
