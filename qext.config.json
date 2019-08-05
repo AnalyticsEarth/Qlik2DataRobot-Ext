@@ -1,0 +1,14 @@
+{
+  "extension": "qlik2datarobotext",
+  "mode": "compile",
+  "output": "./dist",
+  "compile": {
+    "entry": "./src/qlik2datarobotext.js",
+    "qext": "./src/qlik2datarobotext.qext",
+    "static": "./static"
+  },
+	"deploy": "desktop",
+	"desktopConfig": {
+		"destination": "C:\\Users\\bbb\\Documents\\Qlik\\Sense\\Extensions"
+	}
+}

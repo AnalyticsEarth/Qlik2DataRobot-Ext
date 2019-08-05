@@ -3,7 +3,13 @@
     ["version-transform"]
   ],
   "presets": [
-    "env" ,
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "targets": "> 0.25%, not dead"
+      }
+    ],
     ["minify",{
 		"removeConsole":{
         "exclude": ["error", "warn", "info" ]

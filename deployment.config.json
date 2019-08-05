@@ -1,5 +1,5 @@
 {
-  "server": {
+  "serverConfig": {
     "host": "hostname",
     "isSecure": false,
     "prefix": "hdr",
@@ -11,7 +11,8 @@
       "withCredentials": false
     }
   },
-  "desktop": {
+  "mode":"desktop",
+  "desktopConfig": {
     "destination": "C:\\Users\\bbb\\Documents\\Qlik\\Sense\\Extensions"
   }
 }
