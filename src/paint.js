@@ -14,4 +14,6 @@ export default function($element, layout) {
     this.$scope.tableModel.setModel(res);
   });
 
+  this.$scope.refreshVisualization();
+
 }

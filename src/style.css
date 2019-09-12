@@ -371,3 +371,77 @@
 .choose-item {
   width:100%;
 }
+
+.qv-object-qlik2datarobotext .fieldinfo{
+  background-color: rgb(242, 242, 242);
+  width: 100%;
+  padding:10px;
+  box-sizing: border-box;
+}
+
+.qv-object-qlik2datarobotext .fieldinfotab{
+  background-color: #fff;
+  padding:10px;
+  position: relative;
+  overflow: auto;
+}
+
+.qv-object-qlik2datarobotext .fieldinfotabchart{
+  height: 300px;
+}
+
+.qv-object-qlik2datarobotext .chart{
+  height: 260px;
+}
+
+.qv-object-qlik2datarobotext .warning{
+  color: 	#f8981d;
+  padding-right:10px;
+}
+
+.qv-object-qlik2datarobotext .fieldinfodistheader{
+  min-height:40px;
+  font-style: italic;
+}
+
+.qv-object-qlik2datarobotext .iconbar{
+  float:right;
+  margin-bottom: 10px;
+}
+
+.qv-object-qlik2datarobotext .icon{
+  float:right;
+  margin-left:25px;
+}
+
+.qv-object-qlik2datarobotext .infolist{
+  float:right;
+  clear:right;
+  min-width: 100%;
+}
+
+.qv-object-qlik2datarobotext .infolistitem{
+  padding:7px;
+  border-bottom:1px solid black;
+}
+
+.qv-object-qlik2datarobotext .infolistitemvalue{
+  float:right;
+  padding-left:5px;
+}
+
+.qv-object-qlik2datarobotext .footnote{
+  clear:both;
+  font-style: italic;
+  padding:5px;
+  padding-top:10px;
+  box-sizing: border-box;
+}
+
+.qv-object-qlik2datarobotext .footnote ul{
+  list-style-type: none;
+}
+
+.qv-object-qlik2datarobotext .footnote li{
+  margin-top:5px;
+}

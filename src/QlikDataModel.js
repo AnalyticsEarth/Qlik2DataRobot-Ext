@@ -9,6 +9,7 @@ class QlikDataModel {
     this.model = tablesAndKeys;
     this.setup = true;
     this.setTablesEnabled();
+    this.setTablesAndFieldsId();
     this.selections = {};
     this.resetSearch();
 
@@ -66,6 +67,30 @@ class QlikDataModel {
     }else{
       return t2a;
     }
+  }
+
+  setTablesAndFieldsId()
+  {
+    let idcounter = 0;
+    if(!this.setup) return;
+    this.model.qtr.forEach((table) => {
+      table.qFields.forEach((field) => {
+        field.uid = idcounter;
+        idcounter++;
+
+        field.warningMessages = [];
+        if(field.qnPresentDistinctValues === field.qnNonNulls){
+          field.warning = true;
+          field.warningMessages.push("This field has a lot of unique values, it is not likely to be useful for predictive analysis unless you include a field from another associated table with more rows.")
+        }
+
+        if(field.qTags.includes('$key')){
+          field.warning = true;
+          field.warningMessages.push("This field is a key, in most situations this field is not useful for predictive analytics.")
+        }
+
+      })
+    })
   }
 
   getTableListForField(fieldname)
