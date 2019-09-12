@@ -3,7 +3,7 @@ export default {
     qDimensions: [],
     qMeasures: [],
     qInitialDataFetch: [{
-      qWidth: 3,
+      qWidth: 2,
       qHeight: 1000
     }]
   }

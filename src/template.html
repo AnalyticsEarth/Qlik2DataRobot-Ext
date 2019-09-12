@@ -1,4 +1,20 @@
-<div class="chart-container">
+<!-- Upload Data to DataRobot -->
+<div class="chart-container choose-frame" ng-if="layout.props.mode == 'choose'">
+  <div class="choose-list">
+    <h2 class="header choose-item">
+      Select Mode
+    </h2>
+    <ul class="choose-item">
+      <li>
+        <button class="add-button lui-button ng-binding" ng-click="selectMode('upload')">Upload Data</button>
+      </li>
+      <li>
+        <button class="add-button lui-button ng-binding" ng-click="selectMode('explain')">Prediction Explanations</button>
+      </li>
+      </ul>
+  </div>
+</div>
+<div class="chart-container" ng-if="layout.props.mode == 'upload'">
   <div class="disableoverlay" ng-show="navmode == 'edit'"></div>
   <div class="leftpanel">
     <div class="logoimage connected"></div>
@@ -16,10 +32,10 @@
       <div ng-show="projectstatus == 'NOT_CREATED'">
         <div class="sectionbody">
           <label class="lui-label">Project Name</label>
-          <input class="lui-input  lui-input--large" ng-model="projectname" ng-value="projectname" />
+          <input class="lui-input  lui-input--large" ng-model="$parent.projectname" ng-value="$parent.projectname" />
           <div ng-show="layout.props.apitoken == ''">
             <label class="lui-label">API Token</label>
-            <input class="lui-input  lui-input--large" ng-model="apitoken" ng-value="apitoken" />
+            <input class="lui-input  lui-input--large" ng-model="$parent.apitoken" ng-value="$parent.apitoken" />
           </div>
         </div>
         <div class="sectionbody">
@@ -84,14 +100,14 @@
       <div>
         <span class="lui-list__text titleselectall">
           <label class="lui-checkbox">
-            <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-change="selectAll()" ng-model="selectallvalue" ng-value="selectallvalue" ng-disabled="countSelected() === 0" />
+            <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-change="selectAll()" ng-model="$parent.selectallvalue" ng-value="$parent.selectallvalue" ng-disabled="countSelected() === 0" />
             <div class="lui-checkbox__check-wrap">
               <span class="lui-checkbox__check"></span>
             </div>
           </label>
         </span>
         <div class="titleleft">Field Name</div>
-        <div class="titleright">Unique Values</div>
+        <div class="titleright">More Information</div>
       </div>
       <div class="fieldlistscroll">
         <ul class="lui-list">
@@ -108,7 +124,7 @@
               </span>
             </li>
               <span ng-repeat="f in t.qFields">
-              <li class="lui-list__item" ng-show="showField(t,f)">
+              <li class="lui-list__item" ng-show="showField(t,f)" ng-click="selectFieldInfo(t,f)">
                 <span class="lui-list__text">
                   <label class="lui-checkbox checkbox">
                     <input class="lui-checkbox__input" type="checkbox" aria-label="Label" ng-model="tableModel.getFieldList().selections[f.qName].enabled" ng-value="tableModel.getFieldList().selections[f.qName].enabled" ng-change="fieldSelectionChange()" />
@@ -118,14 +134,86 @@
                     </div>
                     </label>
                     <span class="lui-checkbox__check-text checktext">{{f.qName}}</span>
-                    <div class="cardinality">{{f.qnPresentDistinctValues}}</div>
+                    <div class="cardinality">
+                    <span class="lui-icon lui-icon--key warning" ng-show="f.qTags.includes('$key')"></span>
+                    <span class="lui-icon lui-icon--warning-triangle warning" ng-show="f.qnPresentDistinctValues === f.qnNonNulls"></span>
+                    <span class="lui-icon lui-icon--more"></span>
+                  </div>
 
                 </span>
               </li>
-              </span>
-              </span>
-            </ul>
+              <li class="lui-list__item" ng-show="showField(t,f) && showFieldInfo(t,f)">
+                <div class="fieldinfo">
+                  <ul class="lui-tabset lui-tabset--fill" style="border-top: 1px solid rgba(0, 0, 0, 0.1); border-bottom: 1px solid rgba(0, 0, 0, 0.1);">
+                    <li class="lui-tab" ng-class="classForSelectedTab('DM')" ng-click="selectTab('DM',f)">
+                      <span class="lui-tab__text">Data Model</span>
+                    </li>
+                    <li class="lui-tab" ng-class="classForSelectedTab('D')" ng-click="selectTab('D',f)">
+                      <span class="lui-tab__text">Distribution</span>
+                    </li>
+                    <li ng-show="false" class="lui-tab" ng-class="classForSelectedTab('S')" ng-click="selectTab('S',f)">
+                      <span class="lui-tab__text">Statistics</span>
+                    </li>
+                  </ul>
+                  <div class="fieldinfotab" ng-if="infoSelectedTab === 'DM'">
+                    <div class="iconbar">
+                      <div class="icon" ng-show="f.qTags.includes('$key')"><span class="lui-icon lui-icon--key"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$geoname')"><span class="lui-icon lui-icon--map"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$text')"><span class="lui-icon lui-icon--text"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$numeric')"><span class="lui-icon lui-icon--kpi"></span></div>
+                      <div class="icon" ng-show="f.qTags.includes('$date')"><span class="lui-icon lui-icon--calendar"></span></div>
+                    </div>
+                    <div class="infolist">
+                      <div class="infolistitem">Information Density:<div class="infolistitemvalue">{{Math.floor(f.qInformationDensity*100) + "%"}}</div>
+                      </div>
+                      <div class="infolistitem">Subset Ratio:<div class="infolistitemvalue">{{Math.floor(f.qSubsetRatio*100)}}%</div>
+                      </div>
+                      <div class="infolistitem">Non Nulls:<div class="infolistitemvalue">{{f.qnNonNulls}}</div>
+                      </div>
+                      <div class="infolistitem">Present Distinct Values:<div class="infolistitemvalue">{{f.qnPresentDistinctValues}}</div>
+                      </div>
+                      <div class="infolistitem">Total Distinct Values:<div class="infolistitemvalue">{{f.qnTotalDistinctValues}}</div>
+                      </div>
+                      <div class="infolistitem">Rows:<div class="infolistitemvalue">{{f.qnRows}}</div>
+                      </div>
+                    </div>
+                    <div class="footnote">
+                      <ul>
+                        <span ng-repeat="m in f.warningMessages">
+                        <li class="warning">{{m}}</li>
+                        </span>
+                        <li ng-show="f.qTags.includes('$key')">This field is a key, values will originate from all the tables that share this key.</li>
+                        <li ng-show="true">Information relates to the data model, selections are not reflected in these statistics.</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="fieldinfotab fieldinfotabchart" ng-if="infoSelectedTab === 'D'">
+                    <div class="fieldinfodistheader">
+                      {{currentChartInfo}}
+                    </div>
+                    <div class="chart" id="{{'distviz' + f.uid}}"></div>
+                  </div>
+                </div>
+              </li>
+            </span>
+          </span>
+        </ul>
+
       </div>
     </div>
+  </div>
+</div>
+<!-- Prediction Explanations -->
+<div class="chart-container" ng-if="layout.props.mode == 'explain'">
+  <div class="explain">
+  <div class="explain-row" ng-repeat="row in layout.qHyperCube.qDataPages[0].qMatrix">
+    <div class="explain-key">{{row[0].qText}}</div>
+    <div class="explain-body" ng-init="a = explainationsConvert(row[1].qText)">
+      <div class="explain-body-row" ng-repeat="f in a">
+        <span class="explain-strength">{{f.qualitativeStrength}}</span><br/><span class="explain-feature">{{f.feature}}</span><br/>
+        <span class="explain-value">{{f.featureValue}}</span>
+      </div>
+    </div>
+  </div>
   </div>
 </div>

@@ -5,7 +5,7 @@ let about = {
     about1: {
       type: "string",
       component: "text",
-      label: "Steven Pressland, Qlik Solution Architect, 2018"
+      label: "Steven Pressland, Qlik Principal Solution Architect, 2019"
     },
     about1a: {
       type: "string",
@@ -35,36 +35,102 @@ let about = {
   }
 };
 
-export default {
+let panel = {
   type: "items",
   component: "accordion",
   items: {
-    datarobot: {
-      type: "items",
-      label: "Qlik 2 DataRobot",
+    mode:{
+      type:"items",
+      label:"Extension Mode",
       items:{
-        apiendpoint:{
-          type: "string",
-          ref:"props.endpoint",
-          label:"API Endpoint",
-          defaultValue:"https://app.datarobot.com"
+        modeselector:{
+          type:"string",
+          ref:"props.mode",
+          label:"Mode",
+          defaultValue:"choose",
+          component: "dropdown",
+          options: [{
+            value: "choose",
+            label: "Select a Mode"
+          }, {
+            value: "upload",
+            label: "Upload"
+          }, {
+            value: "explain",
+            label: "Prediction Explaination"
+          }],
         },
-        webendpoint:{
-          type: "string",
-          ref:"props.webendpoint",
-          label:"Web Endpoint",
-          defaultValue:"https://app.datarobot.com"
+        upload:{
+          type:"items",
+          show: (a) => {
+            //console.log(a);
+            return (a.props.mode == 'upload');
+          },
+          items:{
+            apiendpoint:{
+              type: "string",
+              ref:"props.endpoint",
+              label:"API Endpoint",
+              defaultValue:"https://app.datarobot.com"
+            },
+            webendpoint:{
+              type: "string",
+              ref:"props.webendpoint",
+              label:"Web Endpoint",
+              defaultValue:"https://app.datarobot.com"
+            },
+            apitoken:{
+              type: "string",
+              expression: "optional",
+              ref:"props.apitoken",
+              label:"API Token",
+            },
+            ssename:{
+              type: "string",
+              ref:"props.ssename",
+              label:"Analytic Connector",
+              defaultValue:"DataRobot"
+            }
+          }
+        }
+      }
+    },
+    data:{
+      uses: "data",
+      items: {
+        dimensions: {
+          min: 0,
+          max: 1,
+          disabledRef: "",
+          description: (a, b) => {
+            return "Prediction Key";
+          }
         },
-        apitoken:{
-          type: "string",
-          ref:"props.apitoken",
-          label:"API Token",
-        },
-        ssename:{
-          type: "string",
-          ref:"props.ssename",
-          label:"Analytic Connector",
-          defaultValue:"DataRobot"
+        measures:{
+          min:0,
+          max:(a) => {
+            return a === 1;
+          },
+          disabledRef:"",
+          description: (a, b) => {
+            return "Prediction Explanation Measure";
+          }
+        }
+      }
+    },
+    addons: {
+      type: "items",
+      component: "expandable-items",
+      translation: "properties.addons",
+      items: {
+        dataHandling: {
+          uses: "dataHandling",
+          items: {
+            suppressZero: null,
+            calcCond: {
+              uses: "calcCond"
+            }
+          }
         }
       }
     },
@@ -74,3 +140,5 @@ export default {
     about
   }
 }
+
+export default panel;
