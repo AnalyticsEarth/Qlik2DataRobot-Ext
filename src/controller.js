@@ -100,11 +100,14 @@ export default ['$scope', '$element', function($scope, $element) {
         };
         $scope.app.createCube(cubedef).then((cube) => {
           var error = false;
+          console.log(cube);
           if (typeof cube.layout.qHyperCube.qError != 'undefined') {
             $scope.projecterror = "ERROR";
             $scope.projectstatus = "NOT_CREATED";
             error = true;
           } else {
+            error = false;
+            $scope.projecterror = "";
             $scope.projectid = cube.layout.qHyperCube.qDataPages[0].qMatrix[0][0].qText;
           }
           $scope.app.destroySessionObject(cube.layout.qInfo.qId).then((obj) => {

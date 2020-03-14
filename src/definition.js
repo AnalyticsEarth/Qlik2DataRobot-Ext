@@ -5,7 +5,7 @@ let about = {
     about1: {
       type: "string",
       component: "text",
-      label: "Steven Pressland, Qlik Principal Solution Architect, 2019"
+      label: "Steven Pressland, Qlik, 2020"
     },
     about1a: {
       type: "string",

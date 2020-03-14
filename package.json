@@ -1,6 +1,6 @@
 {
   "name": "qlik2datarobotext",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "scripts": {
     "qext-scripts": "qext-scripts",
     "watch-qext-scripts": "qext-scripts -w"
