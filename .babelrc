@@ -12,7 +12,7 @@
     ],
     ["minify",{
 		"removeConsole":{
-        "exclude": ["error", "warn", "info", "log" ]
+        "exclude": ["error", "warn", "info" ]
       },
       "removeDebugger":true
       }
